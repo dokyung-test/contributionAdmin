@@ -46,7 +46,7 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 <script>
-function typeCheck(var num){
+function typeCheck(num){
 	location.href="memberListType.do?type="+num;
 }
 </script>
@@ -239,20 +239,20 @@ function typeCheck(var num){
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-						<input type = "button" value="개인회원" onclick = "typeCheck(1)">
-						<input type = "button" value="단체회원" onclick = "typeCheck(2)">
+						<input type = "button" value="개인회원" onclick = "typeCheck('1')">
+						<input type = "button" value="단체회원" onclick = "typeCheck('2')">
 								
 							<!-- <h4 class="m-0 font-weight-bold text-primary">프로그램 신청 List</h4> -->
 						</div>
 						<div class="table-responsive">
 							<div class="card-body">
-							${userList.user_id}
-							${userList.user_type_id}
+							
+							
 							<%--개인 회원 리스트  --%>
-							<%-- <c:choose>
-								<c:when test="${memberList.user_type_id == 1 || memberList.user_type_id == 3}">
+							<c:choose>
+								<c:when test="${type == 1}">
 									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-									<c:if test="${!empty memberList}">
+									<c:if test="${!empty userList}">
 									<thead>
 										<tr>
 											<th>ID</th>
@@ -265,17 +265,17 @@ function typeCheck(var num){
 
 									<tbody>
 									
-										<c:forEach var="memberList" items="${memberList}">
+										<c:forEach var="user" items="${userList}">
 											<tr>
-												<td style="font-size: 15px">${memberList.user_id}</td>
-												<td style="font-size: 15px">${memberList.name}</td>
-												<td style="font-size: 15px">${memberList.nickname}</td>
-												<td style="font-size: 15px">${memberList.grade}</td>
-												<td style="font-size: 15px"><fmt:formatDate value="${memberList.register_date}" pattern = "yyyy-MM-dd"/></td>
+												<td style="font-size: 15px">${user.user_id}</td>
+												<td style="font-size: 15px">${user.name}</td>
+												<td style="font-size: 15px">${user.nickname}</td>
+												<td style="font-size: 15px">${user.grade}</td>
+												<td style="font-size: 15px"><fmt:formatDate value="${user.register_date}" pattern = "yyyy-MM-dd"/></td>
 											</tr>
 										</c:forEach>
 										</c:if>
-										<c:if test="${empty memberList}">
+										<c:if test="${empty userList}">
 											<tr>
 												<td rowspan="4">가입한 회원이 없습니다.</td>
 											</tr>
@@ -284,8 +284,8 @@ function typeCheck(var num){
 								</table>
 								</c:when>
 								
-								기관 리스트 
-								<c:when test="${user_type_id == 2 }">
+				
+								<c:when test="${type == 2 }">
 									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
@@ -307,7 +307,7 @@ function typeCheck(var num){
 												<td style="font-size: 15px">${memberList.nanmmByNm}</td>
 												<td style="font-size: 15px">${memberList.rprsntvNm}</td>
 												<td style="font-size: 15px">${memberList.user_id}</td>
-												<td style="font-size: 15px">${memberList.adress}</td>
+												<td style="font-size: 15px">${memberList.adres}</td>
 												<td style="font-size: 15px">${memberList.hmpadres}</td>
 												<td style="font-size: 15px"><fmt:formatDate value="${memberList.register_date}" pattern = "yyyy-MM-dd"/></td>
 											</tr>
@@ -322,7 +322,7 @@ function typeCheck(var num){
 								</table>
 								</c:when>
 							</c:choose>
- --%>
+
 								
 							</div>
 						</div>

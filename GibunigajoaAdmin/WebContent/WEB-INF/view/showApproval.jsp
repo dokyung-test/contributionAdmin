@@ -154,7 +154,7 @@
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           		<div class="bg-white py-2 collapse-inner rounded">
-            		<a class="collapse-item" href="#">회원 List</a>
+            		<a class="collapse-item" href="memberListType.do?type=1">회원 List</a>
             		<a class="collapse-item" href="#">회원 Chart</a>
             	</div>
             	</div>

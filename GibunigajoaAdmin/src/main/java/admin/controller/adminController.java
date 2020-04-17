@@ -135,11 +135,13 @@ public class adminController {
 			if(type == 1) {
 				List<UserDto> u = service.userList();
 				m.addObject("userList", u);
+				m.addObject("type", 1);
 				System.out.println("u: "+u);
 				System.out.println("m: "+m.getModel());
 			}else {
 				List<OrganizationDto> o = service.organizationList();
 				m.addObject("memberList", o);
+				m.addObject("type", 2);
 			}
 			
 			return m;

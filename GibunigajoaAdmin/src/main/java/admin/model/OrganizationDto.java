@@ -9,7 +9,7 @@ private int user_type_id;
 private String organization_id;
 private String nanmmByNm;
 private String rprsntvNm;
-private String adress;
+private String adres;
 private String hmpadres;
 
 public String getUser_id() {
@@ -48,11 +48,11 @@ public String getRprsntvNm() {
 public void setRprsntvNm(String rprsntvNm) {
 	this.rprsntvNm = rprsntvNm;
 }
-public String getAdress() {
-	return adress;
+public String getAdres() {
+	return adres;
 }
-public void setAdress(String adress) {
-	this.adress = adress;
+public void setAdres(String adres) {
+	this.adres = adres;
 }
 public String getHmpadres() {
 	return hmpadres;
