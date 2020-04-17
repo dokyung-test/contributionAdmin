@@ -30,4 +30,16 @@
 	<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
 	
+	<bean id="programDao" class="admin.model.ProgramDao">
+	<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+	
+	<bean id="programImageDao" class="admin.model.ProgramImageDao">
+	<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+	
+	<bean id="typeDao" class="admin.model.TypeDao">
+	<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+	
 </beans>

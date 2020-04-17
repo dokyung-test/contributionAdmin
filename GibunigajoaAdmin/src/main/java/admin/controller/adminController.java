@@ -9,13 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import admin.model.ProgramDto;
 import admin.model.adminNoticeDto;
 import admin.model.adminQandADto;
 import admin.service.adminService;
+import admin.model.ProgramImageDto;
 
 @Controller
 public class adminController {
@@ -95,4 +98,30 @@ public class adminController {
 		return "redirect:/adminNoticeList.do";
 	}
 	
+	//프로그램 승인 리스트
+	@RequestMapping(value="programList.do", method = RequestMethod.GET)
+	public ModelAndView selectProgramList() {
+		ModelAndView mav = new ModelAndView("programApproval");
+		mav.addObject("programList", service.selectAllProgramList());
+		return mav;
+	}
+	
+	//프로그램 승인 신청 상세
+	@RequestMapping(value = "showProgramContent.do", method = RequestMethod.GET)
+	public ModelAndView showProgramContent(int program_id, String organization_id) {
+		ModelAndView mav = new ModelAndView("showApproval");
+		ProgramDto pro = service.getProgramInfo(program_id, organization_id);
+		mav.addObject("requestProgram", pro);
+		mav.addObject("typeValue", service.selectTypeValue(pro.getType_id()));
+		List<ProgramImageDto> images = service.getProgramBanner(program_id, organization_id);
+		mav.addObject("images", images);
+		return mav;
+	}
+	
+	//승인 취소
+	@RequestMapping(value = "updateApprovalFlg.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int updateApprovalProgram(String organization_id, int program_id, int approval_flg) {
+		return service.updateApprovalFlg(organization_id, program_id, approval_flg);
+	}
 }

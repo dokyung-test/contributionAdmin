@@ -52,5 +52,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="noticeUpdate">
      update notices set subject=#{subject},content=#{content},register_date=now() where notice_idx=#{notice_idx}
     </update>
+    
+    <!-- 관리자용 신청프로그램리스트 -->
+	<select id = "selectAllRequestProgramList" resultType="admin.model.ProgramDto">
+		select program_id, program_subject, start_date, end_date, approval_date, approval_flg, organization_id from programs;
+	</select>
 
+	<select id = "selectProgram" parameterType="map" resultType="admin.model.ProgramDto">
+		select * from programs where organization_id = #{organization_id} AND program_id = #{program_id}
+	</select>
+	
+	<select id = "selectType" resultType = "String" parameterType="int">
+		select type from types where type_id = #{type_id}
+	</select>
+	
+	<!-- 관리자용 승인 수정 -->
+	<update id="updateApprovalFlg" parameterType="map">
+		update programs set approval_flg = #{approval_flg}, approval_date=#{approval_date} where program_id = #{program_id} AND organization_id = #{organization_id}
+	</update>
+	
+	<!-- 프로그램의 모든 이미지 -->
+	<select id = "selectProgramImages" parameterType = "map" resultType = "String">
+		select stored_file_name from program_images where program_id = #{program_id} and organization_id = #{organization_id}
+	</select>
 </mapper>

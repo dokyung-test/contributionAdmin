@@ -47,21 +47,10 @@
 <tr><td>단체URL : </td><td>${requestProgram.organization_url}</td></tr>
 <tr><td>은행명 : </td><td>${requestProgram.bank_name}</td></tr>
 <tr><td>계좌번호 : </td><td>${requestProgram.account}</td></tr>
-<tr><td>사업자등록번호 : </td><td>${requestProgram.corporate_registration_number}</td></tr>
 <!-- form안에 버튼은 type을 지정해주지 않으면 default submit으로 움직인다. type을 지정해줄것! -->
-<tr><td>우편번호 : </td><td>${requestProgram.zip}</td></tr>
-<tr><td>주소 : </td><td>${requestProgram.address}</td></tr>
-<tr><td>상세주소 : </td><td>${requestProgram.address_detail}</td></tr>
 <tr><td>연락처 : </td><td>${requestProgram.phone_number}</td></tr>
 <tr><td>대표자명 : </td><td>${requestProgram.representative}</td></tr>
-<c:choose>
-	<c:when test="${requestProgram.approval_flg == 1 }">
-<tr><td>
-<c:if test="${!empty requestProgram.banner_file_name}">
-<img width = "250" height="250" src="${pageContext.request.contextPath}/resources/images/${requestProgram.banner_file_name}">
-</c:if>
-</td></tr>	</c:when>
-</c:choose>
+
 <tr><td>
 	<c:choose>
 	<c:when test="${requestProgram.approval_flg == 0 }">

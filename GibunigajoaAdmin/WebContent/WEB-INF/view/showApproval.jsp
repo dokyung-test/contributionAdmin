@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="true"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri = "http://www.springframework.org/tags/form" %>
 <%@ page session="true"%>
 <%@ page isELIgnored="false"%>
 
@@ -45,82 +46,28 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
-<script>
-	$(function() {
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+	function updateApprovalFlg(approval_flg){
 
-		/* Q&A 답변창 */
-		$("p")
-				.click(
-						function() {
-							var param = "num=" + $(this).attr("title");
-							var url = "adminQandAContent.do";
-							$
-									.ajax({
-										type : "post",
-										url : url,
-										data : param,
-										dataType : "json"
-									})
-									.done(
-											function(args) {
-
-												var board_idx = args.board_idx;
-												var subject = args.subject;
-												var register_date = args.register_date;
-												var content = args.content;
-												var answer = args.answer;
-												var nickname = args.nickname;
-												var date1 = new Date(
-														register_date);
-												var text_date = date1
-														.getFullYear()
-														+ "년  "
-														+ (date1.getMonth() + 1)
-														+ "월 "
-														+ date1.getDate() + "일";
-
-												$("#hidden")
-														.append(
-																"<input type='hidden' name='board_idx' value='"+board_idx+"' />");
-
-												$("#subject").append(
-														"<div class='a'>"
-																+ subject
-																+ "</div>");
-												$("#nickname").append(
-														"<div class='a'>"
-																+ nickname
-																+ "</div>");
-												$("#register_date").append(
-														"<div class='a'>"
-																+ text_date
-																+ "</div>");
-												$("#QandAcontent").append(
-														"<div class='a'>"
-																+ content
-																+ "</div>");
-												if (answer == null) {
-													$("#answer")
-															.append(
-																	"<br class='a'><textarea cols='50' rows='3' name='answer' class='a' style='resize: none;'>"
-																			+ "</textarea>");
-												} else {
-													$("#answer")
-															.append(
-																	"<br class='a'><textarea cols='50' rows='3' name='answer' class='a' style='resize: none;'>"
-																			+ answer
-																			+ "</textarea>");
-												}
-											});
-							$("#contentmodal").show();
-							return false;
-						});
-	});
-
-	function closeModal() {
-		$('.searchModal').hide();
-		$('.a').remove();
-	};
+		var program_id = document.getElementById("program_id").value;
+		var organization_id = document.getElementById("organization_id").value;
+		$.ajax({
+			type : "post",
+			url : "updateApprovalFlg.do",
+			data : "organization_id="+organization_id+"&program_id="+program_id+"&approval_flg="+approval_flg,
+			dataType : "html"
+		}).done(function(args){
+			if(args == 0){
+				alert("승인 에러!");
+			}else{
+				window.location = 'programList.do'
+			}
+		}).fail(function(e){
+			alert(e.responseText);	
+		})
+	}
+	
 </script>
 
 <style>
@@ -146,6 +93,23 @@
 	border-bottom-right-radius: 7px;
 	border: 10px solid transparent;
 }
+/* 공지사항 작성 버튼 꾸미기 */
+#testBtn {
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	margin-right: -4px;
+	border: 1px solid skyblue;
+	background-color: #4e73df;
+	color: white;
+	padding: 5px;
+}
+
+#testBtn:hover {
+	color: white;
+}
+
 </style>
 </head>
 
@@ -158,6 +122,7 @@
 		<ul
 			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 			id="accordionSidebar">
+
 			<br>
 			<!-- Sidebar - Brand -->
 			<div class="sidebar-brand-icon rotate-n-15"></div>
@@ -198,6 +163,7 @@
             	</div>
 			</li>
 			<br>
+								
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
 
@@ -271,7 +237,7 @@
 									Activity Log
 								</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal"
+								<a class="dropdown-item" href="programList.do" data-toggle="modal"
 									data-target="#logoutModal"> <i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 									Logout
@@ -287,65 +253,48 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">Q&A</h1>
-					<p class="mb-4">Q&A 리스트</p>
+					<h1 class="h3 mb-2 text-gray-800">프로그램 승인</h1>
+					<!-- <p class="mb-4">공지사항 올리기</p> -->
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>답변상태</th>
-											<th>제목</th>
-											<th>문의자</th>
-											<th>문의내용</th>
-											<th>답변내용</th>
-											<th>답변일</th>
+						<div class="card-header py-3">
+							<h4 class="m-0 font-weight-bold text-primary">${requestProgram.program_subject}</h4>
+						</div>
+						<div class="table-responsive">
+							<div class="card-body">
+								<table>
+								<form:form commandName="requestProgram" action="/Sample/admin/updateApproval.do">
+ 								<input type = "hidden" id = "organization_id" name = "organization_id" value = "${requestProgram.organization_id}"/>
+ <input type = "hidden" id = "program_id" name = "program_id" value = "${requestProgram.program_id}"/>
+<tr><td>프로그램명 : </td><td>${requestProgram.program_subject}</td></tr>
+<tr><td>분류 : </td><td>${typeValue}</td></tr>
+<tr><td>모집시작일  : </td><td>${requestProgram.start_date}</td></tr>
+<tr><td>모집종료일 : </td><td>${requestProgram.end_date}</td></tr>
+<tr><td>목표금액 : </td><td>${requestProgram.target_amount }</td></tr>
+<tr><td>모집목적 : </td><td>${requestProgram.purpose}</td></tr>
+<tr><td>모집내용(요약) : </td><td>${requestProgram.summary}</td></tr>
+<tr><td>모집내용(상세) : </td><td>${requestProgram.content}</td></tr>
+<tr><td>단체URL : </td><td>${requestProgram.organization_url}</td></tr>
+<tr><td>은행명 : </td><td>${requestProgram.bank_name}</td></tr>
+<tr><td>계좌번호 : </td><td>${requestProgram.account}</td></tr>
+<!-- form안에 버튼은 type을 지정해주지 않으면 default submit으로 움직인다. type을 지정해줄것! -->
+<tr><td>연락처 : </td><td>${requestProgram.phone_number}</td></tr>
+<tr><td>대표자명 : </td><td>${requestProgram.representative}</td></tr>
 
-										</tr>
-									</thead>
-
-									<tbody>
-										<c:forEach var="dto" items="${list}">
-											<tr>
-												<c:if test="${dto.status_id eq 1}">
-													<td style="font-size: 15px">접수중</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 2} ">
-													<td style="font-size: 15px">처리중</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 3}">
-													<td style="font-size: 15px">답변완료</td>
-												</c:if>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.subject}</td>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.nickname}</td>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.content}</td>
-
-												<c:if test="${dto.status_id eq 1}">
-													<td style="font-size: 15px"><p
-															title="${dto.board_idx}">접수중 입니다.</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 2} ">
-													<p title="${dto.board_idx}">
-													<td style="font-size: 15px">처리중 입니다.</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 3}">
-													<p title="${dto.board_idx}">
-													<td style="font-size: 15px">${dto.answer}</td>
-												</c:if>
-												<td style="font-size: 15px"><p title="${dto.board_idx}">
-														<fmt:formatDate value="${dto.register_date}"
-															pattern="yyyy년 MM월 dd일" /></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+<tr><td>
+	<c:choose>
+	<c:when test="${requestProgram.approval_flg == 0 }">
+	<form:button type = "button" onclick = "updateApprovalFlg(1)">승인</form:button>
+	</c:when>
+	<c:when test="${requestProgram.approval_flg == 1 }">
+	<form:button type = "button" onclick = "updateApprovalFlg(0)">승인취소</form:button>
+	</c:when>
+	</c:choose>
+<form:button type = "button" onclick = "window.location='programList.do'">목록으로</form:button>
+</td></tr></form:form>
+</table>
+								
 							</div>
 						</div>
 					</div>
@@ -353,88 +302,8 @@
 				</div>
 				<!-- /.container-fluid -->
 			</div>
-			<!-- End of Main Content -->
+			
 
-			<!-- Q&A 상세 내역-->
-			<div id="contentmodal" class="searchModal">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-md-12">
-							<div class="wrapper">
-								<!--  <div class="col-md-7"> -->
-								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4" style="font-size: 40px">Q&A</h3>
-									<div id="form-message-warning" class="mb-4"></div>
-									<div id="form-message-success" class="mb-4"
-										style="font-size: 20px">Q&A상세내용</div>
-									<hr width="1000px" color="black" noshade />
-									<form method="POST" action="qANDaUpdate.do" name="form">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="status_id">상태
-														<select name="status_id">
-															<option value="1">접수중</option>
-															<option value="2">처리중</option>
-															<option value="3">답변완료</option>
-													</select>
-													</label>
-
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px"
-														id="register_date">작성일</label>
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="subject">제목</label>
-
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="nickname">문의자</label>
-
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px"
-														id="QandAcontent">문의내용</label>
-
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="answer">답변내용</label>
-
-
-												</div>
-											</div>
-											<input type="hidden" id="hidden" />
-
-											<div class="col-md-12">
-												<div class="form-group">
-													<input type="button" onclick="closeModal()"
-														style="float: right; height: 50px; width: 240px; font-size: 20px;"
-														value="취소" class="btn btn-primary" /> <input
-														type="submit"
-														style="float: right; margin-right: 1%; height: 50px; width: 240px; font-size: 20px;"
-														value="보내기" class="btn btn-primary" />
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Q&A답변창 끝 -->
 
 		</div>
 		<!-- End of Content Wrapper -->
@@ -456,7 +325,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">A?</span>
+						<span aria-hidden="true">Ã</span>
 					</button>
 				</div>
 				<div class="modal-body">Select "Logout" below if you are ready
@@ -492,6 +361,8 @@
 	<!-- Page level custom scripts -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/demo/datatables-demo.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/vendor/datatables/check.js?v=1"></script>
 
 </body>
 

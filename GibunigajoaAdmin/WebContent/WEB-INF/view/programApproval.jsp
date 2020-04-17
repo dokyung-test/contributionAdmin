@@ -175,19 +175,18 @@ b
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item"><a class="nav-link"
-				href="admonNoticeList.do"> <span style="font-size: 18px;">공지사항
+				href="adminNoticeList.do"> <span style="font-size: 18px;">공지사항
 						올리기</span>
 			</a></li>
 			<br>
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="adminQandA.do">
+			<li class="nav-item"><a class="nav-link" href="programList.do">
 					<span style="font-size: 18px;">프로그램 승인</span>
 			</a></li>
 			<br>
 			<!-- Nav Item - Tables -->
 			<li class="nav-item">
 			<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-				 <i class="fas fa-fw fa-cog"></i>
 				<span style="font-size: 18px;">회원 관리</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -272,7 +271,7 @@ b
 									Activity Log
 								</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal"
+								<a class="dropdown-item" href="programList.do" data-toggle="modal"
 									data-target="#logoutModal"> <i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 									Logout
@@ -288,47 +287,48 @@ b
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">공지사항 페이지</h1>
-					<p class="mb-4">공지사항 올리기</p>
+					<h1 class="h3 mb-2 text-gray-800">프로그램 승인</h1>
+					<!-- <p class="mb-4">공지사항 올리기</p> -->
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">공지사항</h4>
-							<a style="position: absolute; right: 50px; top: 10px;">
-								<button id="testBtn" style="font-size: 20px;">공지사항 작성</button>
-							</a>
+							<h4 class="m-0 font-weight-bold text-primary">프로그램 신청 List</h4>
 						</div>
 						<div class="table-responsive">
 							<div class="card-body">
 
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>작성날짜</th>
-											<th>제목</th>
-											<th>내용</th>
-											<th>조회수</th>
-											<th></th>
+											<th>프로그램 제목</th>
+											<th>시작일자</th>
+											<th>종료일자</th>
+											<th>승인상태</th>
 										</tr>
 									</thead>
 
 									<tbody>
-										<c:forEach var="dto" items="${list}">
+									<c:if test="${!empty programList}">
+										<c:forEach var="requestProgram" items="${programList}">
 											<tr>
-												<td style="font-size: 15px"><p id="register_date">
-														<fmt:formatDate value="${dto.register_date}"
-															pattern="yyyy년 MM월 dd일" /></td>
-												<td style="font-size: 15px"><p id="subject">${dto.subject}</td>
-												<td style="font-size: 15px"><p id="content">${dto.content}</td>
-												<td style="font-size: 15px"><p id="readcount">${dto.readcount}</td>
-												<td align="center" style="font-size: 15px"><a href="#"
-													title="${dto.notice_idx}" class="update"
-													style="color: blue">수정 / </a> <a href="#"
-													onclick="deletelist(${dto.notice_idx})" style="color: blue">삭제</a></td>
+												<td style="font-size: 15px">
+												<a href = "showProgramContent.do?program_id=${requestProgram.program_id}&organization_id=${requestProgram.organization_id}">${requestProgram.program_subject}</a>
+												</td>
+												<td style="font-size: 15px"><p><fmt:formatDate value="${requestProgram.start_date}" pattern = "yyyy-MM-dd"/></td>
+												<td style="font-size: 15px"><fmt:formatDate value="${requestProgram.end_date}" pattern="yyyy-MM-dd"/></td>
+												<td style="font-size: 15px">
+												<c:if test="${requestProgram.approval_flg == 0}">미승인</c:if>
+												<c:if test="${requestProgram.approval_flg == 1}">승인</c:if>
+												</td>
 											</tr>
 										</c:forEach>
+										</c:if>
+										<c:if test="${empty programList }">
+											<tr>
+												<td rowspan="4">신청한 프로그램이 없습니다.</td>
+											</tr>
+										</c:if>
 									</tbody>
 								</table>
 							</div>
@@ -338,102 +338,7 @@ b
 				</div>
 				<!-- /.container-fluid -->
 			</div>
-			<!-- End of Main Content -->
-
-			<!-- 공지사항 작성 폼 -->
-			<div id="modal" class="searchModal">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-md-12">
-							<div class="wrapper">
-								<!--  <div class="col-md-7"> -->
-								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4" style="font-size: 40px">공지사항 작성</h3>
-									<div id="form-message-warning" class="mb-4"></div>
-									<div id="form-message-success" class="mb-4"
-										style="font-size: 20px">공지사항을 작성해 주세요.</div>
-									<form method="POST" action="insertNotice.do" name="form"
-										onsubmit="return checkAll()">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px">제목</label> <input
-														type="text" class="form-control" name="subject"
-														placeholder="제목">
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px">공지 내용</label>
-													<textarea name="content" class="form-control" cols="50"
-														rows="10" placeholder="공지할 내용을 작성해 주세요."></textarea>
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<input type="button" onclick="closeModal()"
-														style="float: right; height: 50px; width: 240px; font-size: 20px;"
-														value="취소" class="btn btn-primary" /> <input
-														type="submit"
-														style="float: right; margin-right: 1%; height: 50px; width: 240px; font-size: 20px;"
-														value="작성" class="btn btn-primary" />
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 공지 사항 추가 종료 -->
-
-			<!-- 공지사항 수정 시작 -->
-			<div id="updatemodal" class="searchModal">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-md-12">
-							<div class="wrapper">
-								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4" style="font-size: 40px">기부 내역 수정</h3>
-
-									<div id="form-message-success" class="mb-4"
-										style="font-size: 20px">기부내역을 수정해 주세요.</div>
-									<form method="POST" action="update.do" name="form2"
-										onsubmit="return checkAll2()">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="subject2">◎제목
-													</label>
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="content2">◎공지사항
-														내용</label>
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<input type="button" onclick="closeModal()" id="cancel"
-														style="float: right; height: 50px; width: 240px; font-size: 20px;"
-														value="취소" class="btn btn-primary" /> <input
-														type="submit" id="hidden"
-														style="float: right; margin-right: 1%; height: 50px; width: 240px; font-size: 20px;"
-														value="공지사항 수정" class="btn btn-primary" />
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 공지사항 수정 끝 -->
+			
 
 
 		</div>

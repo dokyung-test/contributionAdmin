@@ -175,12 +175,12 @@ b
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item"><a class="nav-link"
-				href="admonNoticeList.do"> <span style="font-size: 18px;">공지사항
+				href="adminNoticeList.do"> <span style="font-size: 18px;">공지사항
 						올리기</span>
 			</a></li>
 			<br>
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="adminQandA.do">
+			<li class="nav-item"><a class="nav-link" href="programList.do">
 					<span style="font-size: 18px;">프로그램 승인</span>
 			</a></li>
 			<br>
