@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- Q&A 리스트 -->
 	<select id="qAndaList" resultType="admin.model.adminQandADto">
-		select u.nickname,q.subject,q.register_date,q.status_id from users u,question_boards q where u.user_idx=q.user_idx and q.board_idx;
+		select q.board_idx,u.nickname,q.subject,q.register_date,q.status_id from users u,question_boards q where u.user_idx=q.user_idx and q.board_idx;
 	</select>
 
     <!-- Q&A 상세글 -->
