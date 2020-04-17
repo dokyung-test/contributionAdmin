@@ -48,77 +48,58 @@
 <script>
 	$(function() {
 
-		/* Q&A 답변창 */
-		$("p")
-				.click(
-						function() {
-							var param = "num=" + $(this).attr("title");
-							var url = "adminQandAContent.do";
-							$
-									.ajax({
-										type : "post",
-										url : url,
-										data : param,
-										dataType : "json"
-									})
-									.done(
-											function(args) {
+		/* 공지사항 작성 누를 시 입력 창 */
+		$("#testBtn").on('click', function() {
+			$("#modal").show();
+		});
 
-												var board_idx = args.board_idx;
-												var subject = args.subject;
-												var register_date = args.register_date;
-												var content = args.content;
-												var answer = args.answer;
-												var nickname = args.nickname;
-												var date1 = new Date(
-														register_date);
-												var text_date = date1
-														.getFullYear()
-														+ "년  "
-														+ (date1.getMonth() + 1)
-														+ "월 "
-														+ date1.getDate() + "일";
+		$(".update")
+		.click(
+				function() {
+					var param = "num2=" + $(this).attr("title");
+					var url = "updateNoticeForm.do";
+					$
+							.ajax({
+								type : "post",
+								url : url,
+								data : param,
+								dataType : "json"
+							})
+							.done(
+									function(args) {
+                                        var notice_idx=args.notice_idx;
+										var subject = args.subject;
+										var content = args.content;
 
-												$("#hidden")
-														.append(
-																"<input type='hidden' name='board_idx' value='"+board_idx+"' />");
+										$("#subject2")
+												.append(
+														"<br class='a'><input type='text' name='subject' class='a' value='"+subject+"'>");
+										$("#content2")
+												.append(
+														"<br class='a'><textarea cols='50' rows='3' name='content' class='a' style='resize: none;'>"
+																		+ content
+																		+ "</textarea>");
+										$("#hidden")
+										.append(
+												"<input type='hidden' name='notice_idx' value='"+notice_idx+"' />");
+									});
+					$("#updatemodal").show();
+					return false;
+				});
 
-												$("#subject").append(
-														"<div class='a'>"
-																+ subject
-																+ "</div>");
-												$("#nickname").append(
-														"<div class='a'>"
-																+ nickname
-																+ "</div>");
-												$("#register_date").append(
-														"<div class='a'>"
-																+ text_date
-																+ "</div>");
-												$("#QandAcontent").append(
-														"<div class='a'>"
-																+ content
-																+ "</div>");
-												if (answer == null) {
-													$("#answer")
-															.append(
-																	"<br class='a'><textarea cols='50' rows='3' name='answer' class='a' style='resize: none;'>"
-																			+ "</textarea>");
-												} else {
-													$("#answer")
-															.append(
-																	"<br class='a'><textarea cols='50' rows='3' name='answer' class='a' style='resize: none;'>"
-																			+ answer
-																			+ "</textarea>");
-												}
-											});
-							$("#contentmodal").show();
-							return false;
-						});
 	});
+	function deletelist(a){
+	      if(confirm("삭제하시겠습니까?")){
+	            location.href="deleteNotice.do?notice_idx="+a;
+
+	          }else{
+	            close();
+	              }
+			}
 
 	function closeModal() {
 		$('.searchModal').hide();
+		$('#updatemodal').hide();
 		$('.a').remove();
 	};
 </script>
@@ -146,6 +127,23 @@
 	border-bottom-right-radius: 7px;
 	border: 10px solid transparent;
 }
+/* 공지사항 작성 버튼 꾸미기 */
+#testBtn {
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	margin-right: -4px;
+	border: 1px solid skyblue;
+	background-color: #4e73df;
+	color: white;
+	padding: 5px;
+}
+
+#testBtn:hover {
+	color: white;
+}
+b
 </style>
 </head>
 
@@ -158,6 +156,7 @@
 		<ul
 			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 			id="accordionSidebar">
+
 			<br>
 			<!-- Sidebar - Brand -->
 			<div class="sidebar-brand-icon rotate-n-15"></div>
@@ -176,7 +175,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item"><a class="nav-link"
-				href="adminNoticeList.do"> <span style="font-size: 18px;">공지사항
+				href="admonNoticeList.do"> <span style="font-size: 18px;">공지사항
 						올리기</span>
 			</a></li>
 			<br>
@@ -188,6 +187,7 @@
 			<!-- Nav Item - Tables -->
 			<li class="nav-item">
 			<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+				 <i class="fas fa-fw fa-cog"></i>
 				<span style="font-size: 18px;">회원 관리</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -198,6 +198,7 @@
             	</div>
 			</li>
 			<br>
+								
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
 
@@ -287,61 +288,45 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">Q&A</h1>
-					<p class="mb-4">Q&A 리스트</p>
+					<h1 class="h3 mb-2 text-gray-800">공지사항 페이지</h1>
+					<p class="mb-4">공지사항 올리기</p>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
+						<div class="card-header py-3">
+							<h4 class="m-0 font-weight-bold text-primary">공지사항</h4>
+							<a style="position: absolute; right: 50px; top: 10px;">
+								<button id="testBtn" style="font-size: 20px;">공지사항 작성</button>
+							</a>
+						</div>
+						<div class="table-responsive">
+							<div class="card-body">
+
 								<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
 									<thead>
 										<tr>
-											<th>답변상태</th>
+											<th>작성날짜</th>
 											<th>제목</th>
-											<th>문의자</th>
-											<th>문의내용</th>
-											<th>답변내용</th>
-											<th>답변일</th>
-
+											<th>내용</th>
+											<th>조회수</th>
+											<th></th>
 										</tr>
 									</thead>
 
 									<tbody>
 										<c:forEach var="dto" items="${list}">
 											<tr>
-												<c:if test="${dto.status_id eq 1}">
-													<td style="font-size: 15px">접수중</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 2} ">
-													<td style="font-size: 15px">처리중</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 3}">
-													<td style="font-size: 15px">답변완료</td>
-												</c:if>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.subject}</td>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.nickname}</td>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.content}</td>
-
-												<c:if test="${dto.status_id eq 1}">
-													<td style="font-size: 15px"><p
-															title="${dto.board_idx}">접수중 입니다.</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 2} ">
-													<p title="${dto.board_idx}">
-													<td style="font-size: 15px">처리중 입니다.</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 3}">
-													<p title="${dto.board_idx}">
-													<td style="font-size: 15px">${dto.answer}</td>
-												</c:if>
-												<td style="font-size: 15px"><p title="${dto.board_idx}">
+												<td style="font-size: 15px"><p id="register_date">
 														<fmt:formatDate value="${dto.register_date}"
 															pattern="yyyy년 MM월 dd일" /></td>
+												<td style="font-size: 15px"><p id="subject">${dto.subject}</td>
+												<td style="font-size: 15px"><p id="content">${dto.content}</td>
+												<td style="font-size: 15px"><p id="readcount">${dto.readcount}</td>
+												<td align="center" style="font-size: 15px"><a href="#"
+													title="${dto.notice_idx}" class="update"
+													style="color: blue">수정 / </a> <a href="#"
+													onclick="deletelist(${dto.notice_idx})" style="color: blue">삭제</a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -355,67 +340,35 @@
 			</div>
 			<!-- End of Main Content -->
 
-			<!-- Q&A 상세 내역-->
-			<div id="contentmodal" class="searchModal">
+			<!-- 공지사항 작성 폼 -->
+			<div id="modal" class="searchModal">
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-12">
 							<div class="wrapper">
 								<!--  <div class="col-md-7"> -->
 								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4" style="font-size: 40px">Q&A</h3>
+									<h3 class="mb-4" style="font-size: 40px">공지사항 작성</h3>
 									<div id="form-message-warning" class="mb-4"></div>
 									<div id="form-message-success" class="mb-4"
-										style="font-size: 20px">Q&A상세내용</div>
-									<hr width="1000px" color="black" noshade />
-									<form method="POST" action="qANDaUpdate.do" name="form">
+										style="font-size: 20px">공지사항을 작성해 주세요.</div>
+									<form method="POST" action="insertNotice.do" name="form"
+										onsubmit="return checkAll()">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="status_id">상태
-														<select name="status_id">
-															<option value="1">접수중</option>
-															<option value="2">처리중</option>
-															<option value="3">답변완료</option>
-													</select>
-													</label>
-
+													<label class="label" style="font-size: 20px">제목</label> <input
+														type="text" class="form-control" name="subject"
+														placeholder="제목">
 												</div>
 											</div>
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="label" style="font-size: 20px"
-														id="register_date">작성일</label>
+													<label class="label" style="font-size: 20px">공지 내용</label>
+													<textarea name="content" class="form-control" cols="50"
+														rows="10" placeholder="공지할 내용을 작성해 주세요."></textarea>
 												</div>
 											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="subject">제목</label>
-
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="nickname">문의자</label>
-
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px"
-														id="QandAcontent">문의내용</label>
-
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="answer">답변내용</label>
-
-
-												</div>
-											</div>
-											<input type="hidden" id="hidden" />
-
 											<div class="col-md-12">
 												<div class="form-group">
 													<input type="button" onclick="closeModal()"
@@ -423,7 +376,7 @@
 														value="취소" class="btn btn-primary" /> <input
 														type="submit"
 														style="float: right; margin-right: 1%; height: 50px; width: 240px; font-size: 20px;"
-														value="보내기" class="btn btn-primary" />
+														value="작성" class="btn btn-primary" />
 												</div>
 											</div>
 										</div>
@@ -434,7 +387,54 @@
 					</div>
 				</div>
 			</div>
-			<!-- Q&A답변창 끝 -->
+			<!-- 공지 사항 추가 종료 -->
+
+			<!-- 공지사항 수정 시작 -->
+			<div id="updatemodal" class="searchModal">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-12">
+							<div class="wrapper">
+								<div class="contact-wrap w-100 p-md-5 p-4">
+									<h3 class="mb-4" style="font-size: 40px">기부 내역 수정</h3>
+
+									<div id="form-message-success" class="mb-4"
+										style="font-size: 20px">기부내역을 수정해 주세요.</div>
+									<form method="POST" action="update.do" name="form2"
+										onsubmit="return checkAll2()">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="label" style="font-size: 20px" id="subject2">◎제목
+													</label>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="label" style="font-size: 20px" id="content2">◎공지사항
+														내용</label>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="button" onclick="closeModal()" id="cancel"
+														style="float: right; height: 50px; width: 240px; font-size: 20px;"
+														value="취소" class="btn btn-primary" /> <input
+														type="submit" id="hidden"
+														style="float: right; margin-right: 1%; height: 50px; width: 240px; font-size: 20px;"
+														value="공지사항 수정" class="btn btn-primary" />
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 공지사항 수정 끝 -->
+
 
 		</div>
 		<!-- End of Content Wrapper -->
@@ -456,7 +456,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">A?</span>
+						<span aria-hidden="true">Ã</span>
 					</button>
 				</div>
 				<div class="modal-body">Select "Logout" below if you are ready
@@ -492,6 +492,8 @@
 	<!-- Page level custom scripts -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/demo/datatables-demo.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/vendor/datatables/check.js?v=1"></script>
 
 </body>
 
