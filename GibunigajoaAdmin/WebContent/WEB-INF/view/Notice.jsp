@@ -53,6 +53,8 @@
 			$("#modal").show();
 		});
 
+		
+        /* 수정 클릭시 */
 		$(".update")
 		.click(
 				function() {
@@ -73,17 +75,49 @@
 
 										$("#subject2")
 												.append(
-														"<br class='a'><input type='text' name='subject' class='a' value='"+subject+"'>");
+														"<p class='a'><input type='text' name='subject' class='form-control' value='"+subject+"'></p>");
 										$("#content2")
 												.append(
-														"<br class='a'><textarea cols='50' rows='3' name='content' class='a' style='resize: none;'>"
+														"<p class='a'><textarea cols='90' rows='15' name='content' class='form-control' style='resize: none;'  align='center'>"
 																		+ content
-																		+ "</textarea>");
+																		+ "</textarea></p>");
 										$("#hidden")
 										.append(
 												"<input type='hidden' name='notice_idx' value='"+notice_idx+"' />");
 									});
 					$("#updatemodal").show();
+					return false;
+				});
+
+		/* 상세글 보기 */
+		$(".content")
+		.click(
+				function() {
+					var param = "num2=" + $(this).attr("title");
+					var url = "updateNoticeForm.do";
+					$
+							.ajax({
+								type : "post",
+								url : url,
+								data : param,
+								dataType : "json"
+							})
+							.done(
+									function(args) {
+                                        var notice_idx=args.notice_idx;
+										var subject = args.subject;
+										var content = args.content;
+
+										$("#subject3")
+												.append(
+														"<p class='a'><input type='text' name='subject' class='form-control' value='"+subject+"'></p>");
+										$("#content3")
+												.append(
+														"<p class='a'><textarea cols='90' readonly='readonly' rows='15' name='content' class='form-control' style='resize: none;'  align='center'>"
+																		+ content
+																		+ "</textarea></p>");
+									});
+					$("#cotentmodal").show();
 					return false;
 				});
 
@@ -143,7 +177,14 @@
 #testBtn:hover {
 	color: white;
 }
-b
+.a {
+	color: black;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	border: 10px solid transparent;
+}
 </style>
 </head>
 
@@ -292,7 +333,7 @@ b
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">공지사항</h4>
+							<h4 class="m-0 font-weight-bold text-primary" >공지사항</h4>
 							<a style="position: absolute; right: 50px; top: 10px;">
 								<button id="testBtn" style="font-size: 20px;">공지사항 작성</button>
 							</a>
@@ -304,11 +345,10 @@ b
 									cellspacing="0">
 									<thead>
 										<tr>
-											<th>작성날짜</th>
-											<th>제목</th>
-											<th>내용</th>
-											<th>조회수</th>
-											<th></th>
+											<th style="width: 150px;">작성날짜</th>
+											<th >제목</th>										
+											<th style="width: 100px;">조회수</th>
+											<th style="width: 100px;"></th>
 										</tr>
 									</thead>
 
@@ -318,12 +358,13 @@ b
 												<td style="font-size: 15px"><p id="register_date">
 														<fmt:formatDate value="${dto.register_date}"
 															pattern="yyyy년 MM월 dd일" /></td>
-												<td style="font-size: 15px"><p id="subject">${dto.subject}</td>
-												<td style="font-size: 15px"><p id="content">${dto.content}</td>
+												<td style="font-size: 15px"><a href="#" class="content" title="${dto.notice_idx}">${dto.subject}</a></td>
 												<td style="font-size: 15px"><p id="readcount">${dto.readcount}</td>
-												<td align="center" style="font-size: 15px"><a href="#"
+												<td align="center" style="font-size: 15px">
+												    <a href="#"
 													title="${dto.notice_idx}" class="update"
-													style="color: blue">수정 / </a> <a href="#"
+													style="color: blue">수정 / </a>
+													 <a href="#"
 													onclick="deletelist(${dto.notice_idx})" style="color: blue">삭제</a></td>
 											</tr>
 										</c:forEach>
@@ -340,16 +381,13 @@ b
 
 			<!-- 공지사항 작성 폼 -->
 			<div id="modal" class="searchModal">
-				<div class="container">
+				<div class="container" style="width:900px;">
 					<div class="row justify-content-center">
 						<div class="col-md-12">
 							<div class="wrapper">
 								<!--  <div class="col-md-7"> -->
 								<div class="contact-wrap w-100 p-md-5 p-4">
 									<h3 class="mb-4" style="font-size: 40px">공지사항 작성</h3>
-									<div id="form-message-warning" class="mb-4"></div>
-									<div id="form-message-success" class="mb-4"
-										style="font-size: 20px">공지사항을 작성해 주세요.</div>
 									<form method="POST" action="insertNotice.do" name="form"
 										onsubmit="return checkAll()">
 										<div class="row">
@@ -370,10 +408,10 @@ b
 											<div class="col-md-12">
 												<div class="form-group">
 													<input type="button" onclick="closeModal()"
-														style="float: right; height: 50px; width: 240px; font-size: 20px;"
+														style="float: right; height: 50px; width: 150px; font-size: 20px;"
 														value="취소" class="btn btn-primary" /> <input
 														type="submit"
-														style="float: right; margin-right: 1%; height: 50px; width: 240px; font-size: 20px;"
+														style="float: right; margin-right: 1%; height: 50px; width: 150px; font-size: 20px;"
 														value="작성" class="btn btn-primary" />
 												</div>
 											</div>
@@ -389,42 +427,77 @@ b
 
 			<!-- 공지사항 수정 시작 -->
 			<div id="updatemodal" class="searchModal">
-				<div class="container">
+				<div class="container"  style="width:900px;">
 					<div class="row justify-content-center">
 						<div class="col-md-12">
 							<div class="wrapper">
 								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4" style="font-size: 40px">기부 내역 수정</h3>
-
-									<div id="form-message-success" class="mb-4"
-										style="font-size: 20px">기부내역을 수정해 주세요.</div>
+									<h3 class="mb-4" style="font-size: 40px" align="center">공지사항 수정</h3>
 									<form method="POST" action="update.do" name="form2"
 										onsubmit="return checkAll2()">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="subject2">◎제목
+													<label class="label" style="font-size: 30px; margin-left:5px;" id="subject2">제목
 													</label>
 												</div>
 											</div>
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="label" style="font-size: 20px" id="content2">◎공지사항
+													<label class="label" style="font-size: 30px;margin-left:5px;" id="content2">공지사항
 														내용</label>
 												</div>
 											</div>
 											<div class="col-md-12">
 												<div class="form-group">
 													<input type="button" onclick="closeModal()" id="cancel"
-														style="float: right; height: 50px; width: 240px; font-size: 20px;"
+														style="float: right; height: 50px; width: 150px; font-size: 20px;"
 														value="취소" class="btn btn-primary" /> <input
 														type="submit" id="hidden"
-														style="float: right; margin-right: 1%; height: 50px; width: 240px; font-size: 20px;"
-														value="공지사항 수정" class="btn btn-primary" />
+														style="float: right; margin-right: 1%; height: 50px; width: 150px; font-size: 20px;"
+														value="수정" class="btn btn-primary" />
 												</div>
 											</div>
 										</div>
 									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 공지사항 수정 끝 -->
+			
+			<!-- 공지사항 상세글 시작 -->
+			<div id="cotentmodal" class="searchModal">
+				<div class="container" style="width:900px;">
+					<div class="row justify-content-center">
+						<div class="col-md-12">
+							<div class="wrapper">
+								<div class="contact-wrap w-100 p-md-5 p-4">
+									<h3 class="mb-4" style="font-size: 40px" align="center">공지사항</h3>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="label" style="font-size: 30px" id="subject3">제목
+													</label>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="label" style="font-size: 30px" id="content3">공지사항
+														내용</label>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<input type="button" onclick="closeModal()" id="cancel"
+														style="float: right; height: 50px; width: 150px; font-size: 20px;"
+														value="취소" class="btn btn-primary" />
+												</div>
+											</div>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -454,7 +527,7 @@ b
 					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">Ã</span>
+						<span aria-hidden="true">A?</span>
 					</button>
 				</div>
 				<div class="modal-body">Select "Logout" below if you are ready
