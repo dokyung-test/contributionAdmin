@@ -40,14 +40,14 @@ public class adminController {
 		return mav;   	
     }
 	
-	// Q&A 상세 글 보기
-	@RequestMapping(value = "/adminQandAContent.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public void QandAContent(HttpServletResponse resp, int num) throws Exception {
-		adminQandADto list = service.QandAContent(num);
-		Gson json = new Gson();
-		resp.setContentType("text/html;charset=utf-8");
-		PrintWriter out = resp.getWriter();
-		out.print(json.toJson(list));
+	// Q&A 답변 창 가기
+	@RequestMapping(value = "/QandAContent.do", method = RequestMethod.GET)
+	public ModelAndView QandAContent(int board_idx){
+		ModelAndView mav = new ModelAndView();
+		adminQandADto list = service.QandAContent(board_idx);		
+		mav.addObject("list",list);
+		mav.setViewName("adminQandAContent");	
+		return mav;
 	}
 	
 	// Q&A답변하기
