@@ -49,7 +49,7 @@
 	$(function() {
 
 		/* Q&A 답변창 */
-		$("p")
+		$("a")
 				.click(
 						function() {
 							var param = "num=" + $(this).attr("title");
@@ -295,22 +295,20 @@
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
+									style="table-layout: fixed;" cellspacing="0">
 									<thead>
 										<tr>
-											<th>답변상태</th>
+											<th style="width: 100px;">답변상태</th>
+											<th style="width: 100px;">문의자</th>
 											<th>제목</th>
-											<th>문의자</th>
-											<th>문의내용</th>
-											<th>답변내용</th>
-											<th>답변일</th>
+											<th style="width: 150px;">답변일</th>
 
 										</tr>
 									</thead>
 
 									<tbody>
 										<c:forEach var="dto" items="${list}">
-											<tr>
+											<tr title="${dto.board_idx}">
 												<c:if test="${dto.status_id eq 1}">
 													<td style="font-size: 15px">접수중</td>
 												</c:if>
@@ -320,26 +318,9 @@
 												<c:if test="${dto.status_id eq 3}">
 													<td style="font-size: 15px">답변완료</td>
 												</c:if>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.subject}</td>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.nickname}</td>
-
-												<td style="font-size: 15px"><p title="${dto.board_idx}">${dto.content}</td>
-
-												<c:if test="${dto.status_id eq 1}">
-													<td style="font-size: 15px"><p
-															title="${dto.board_idx}">접수중 입니다.</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 2} ">
-													<p title="${dto.board_idx}">
-													<td style="font-size: 15px">처리중 입니다.</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 3}">
-													<p title="${dto.board_idx}">
-													<td style="font-size: 15px">${dto.answer}</td>
-												</c:if>
-												<td style="font-size: 15px"><p title="${dto.board_idx}">
+												<td style="font-size: 15px">${dto.nickname}</td>
+												<td style="font-size: 15px"><a href="#" title="${dto.board_idx}">${dto.subject}</a></td>
+												<td style="font-size: 15px">
 														<fmt:formatDate value="${dto.register_date}"
 															pattern="yyyy년 MM월 dd일" /></td>
 											</tr>
