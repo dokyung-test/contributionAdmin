@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="true"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="form" uri = "http://www.springframework.org/tags/form" %>
 <%@ page session="true"%>
 <%@ page isELIgnored="false"%>
 
@@ -46,28 +45,63 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-	function updateApprovalFlg(approval_flg){
+<script>
+	$(function() {
 
-		var program_id = document.getElementById("program_id").value;
-		var organization_id = document.getElementById("organization_id").value;
-		$.ajax({
-			type : "post",
-			url : "updateApprovalFlg.do",
-			data : "organization_id="+organization_id+"&program_id="+program_id+"&approval_flg="+approval_flg,
-			dataType : "html"
-		}).done(function(args){
-			if(args == 0){
-				alert("승인 에러!");
-			}else{
-				window.location = 'programList.do'
+		/* 공지사항 작성 누를 시 입력 창 */
+		$("#testBtn").on('click', function() {
+			$("#modal").show();
+		});
+
+		$(".update")
+		.click(
+				function() {
+					var param = "num2=" + $(this).attr("title");
+					var url = "updateNoticeForm.do";
+					$
+							.ajax({
+								type : "post",
+								url : url,
+								data : param,
+								dataType : "json"
+							})
+							.done(
+									function(args) {
+                                        var notice_idx=args.notice_idx;
+										var subject = args.subject;
+										var content = args.content;
+
+										$("#subject2")
+												.append(
+														"<br class='a'><input type='text' name='subject' class='a' value='"+subject+"'>");
+										$("#content2")
+												.append(
+														"<br class='a'><textarea cols='50' rows='3' name='content' class='a' style='resize: none;'>"
+																		+ content
+																		+ "</textarea>");
+										$("#hidden")
+										.append(
+												"<input type='hidden' name='notice_idx' value='"+notice_idx+"' />");
+									});
+					$("#updatemodal").show();
+					return false;
+				});
+
+	});
+	function deletelist(a){
+	      if(confirm("삭제하시겠습니까?")){
+	            location.href="deleteNotice.do?notice_idx="+a;
+
+	          }else{
+	            close();
+	              }
 			}
-		}).fail(function(e){
-			alert(e.responseText);	
-		})
-	}
-	
+
+	function closeModal() {
+		$('.searchModal').hide();
+		$('#updatemodal').hide();
+		$('.a').remove();
+	};
 </script>
 
 <style>
@@ -93,20 +127,23 @@
 	border-bottom-right-radius: 7px;
 	border: 10px solid transparent;
 }
-
+/* 공지사항 작성 버튼 꾸미기 */
+#testBtn {
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	margin-right: -4px;
+	border: 1px solid skyblue;
+	background-color: #4e73df;
+	color: white;
+	padding: 5px;
+}
 
 #testBtn:hover {
 	color: white;
 }
-
-#leftTd{
-	padding: 10px;
-	padding-bottom: 20px;
-	width: 12%;
-	font-weight: bold;
-}
-
-
+b
 </style>
 </head>
 
@@ -256,48 +293,44 @@
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">${requestProgram.program_subject}</h4>
+							<h4 class="m-0 font-weight-bold text-primary">프로그램 신청 List</h4>
 						</div>
 						<div class="table-responsive">
 							<div class="card-body">
-								<table style="width: 80%; margin-bottom: 20px;">
-								<form:form commandName="requestProgram" action="/Sample/admin/updateApproval.do">
- 								<input type = "hidden" id = "organization_id" name = "organization_id" value = "${requestProgram.organization_id}"/>
- 								<input type = "hidden" id = "program_id" name = "program_id" value = "${requestProgram.program_id}"/>
-								<tr><td id="leftTd">프로그램명 : </td><td>${requestProgram.program_subject}</td></tr>
-								<tr><td id="leftTd">분류 : </td><td>${typeValue}</td></tr>
-								<tr><td id="leftTd">모집시작일  : </td><td>${requestProgram.start_date}</td></tr>
-								<tr><td id="leftTd">모집종료일 : </td><td>${requestProgram.end_date}</td></tr>
-								<tr><td id="leftTd">목표금액 : </td><td>${requestProgram.target_amount }</td></tr>
-								<tr><td id="leftTd">모집목적 : </td><td>${requestProgram.purpose}</td></tr>
-								<tr><td id="leftTd">모집내용(요약) : </td><td id="rightTd">${requestProgram.summary}</td></tr>
-								<tr><td id="leftTd">모집내용(상세) : </td><td>${requestProgram.content}</td></tr>
-								<tr><td id="leftTd">단체URL : </td><td>${requestProgram.organization_url}</td></tr>
-								<tr><td id="leftTd">은행명 : </td><td>${requestProgram.bank_name}</td></tr>
-								<tr><td id="leftTd">계좌번호 : </td><td>${requestProgram.account}</td></tr>
-								<!-- form안에 버튼은 type을 지정해주지 않으면 default submit으로 움직인다. type을 지정해줄것! -->
-								<tr><td id="leftTd">연락처 : </td><td>${requestProgram.phone_number}</td></tr>
-								<tr><td id="leftTd">대표자명 : </td><td>${requestProgram.representative}</td></tr>
-								<tr><td id="leftTd" colspan="2">
-								<hr>
-								<div style="margin-left: 70%;">
-								
-								<c:choose>
-								<c:when test="${requestProgram.approval_flg == 0 }">
-								<form:button type = "button" onclick = "updateApprovalFlg(1)">승인</form:button>
-								</c:when>
-								<c:when test="${requestProgram.approval_flg == 1 }">
-								<form:button type = "button" onclick = "updateApprovalFlg(0)">승인취소</form:button>
-								</c:when>
-								</c:choose>
-								
-								<form:button type = "button" onclick = "window.location='programList.do'">목록으로</form:button>
-								</div>
-								</td></tr>
-								</form:form>
-								
+
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<thead>
+										<tr>
+											<th>프로그램 제목</th>
+											<th>시작일자</th>
+											<th>종료일자</th>
+											<th>승인상태</th>
+										</tr>
+									</thead>
+
+									<tbody>
+									<c:if test="${!empty programList}">
+										<c:forEach var="requestProgram" items="${programList}">
+											<tr>
+												<td style="font-size: 15px">
+												<a href = "showProgramContent.do?program_id=${requestProgram.program_id}&organization_id=${requestProgram.organization_id}">${requestProgram.program_subject}</a>
+												</td>
+												<td style="font-size: 15px"><p><fmt:formatDate value="${requestProgram.start_date}" pattern = "yyyy-MM-dd"/></td>
+												<td style="font-size: 15px"><fmt:formatDate value="${requestProgram.end_date}" pattern="yyyy-MM-dd"/></td>
+												<td style="font-size: 15px">
+												<c:if test="${requestProgram.approval_flg == 0}">미승인</c:if>
+												<c:if test="${requestProgram.approval_flg == 1}">승인</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+										</c:if>
+										<c:if test="${empty programList }">
+											<tr>
+												<td rowspan="4">신청한 프로그램이 없습니다.</td>
+											</tr>
+										</c:if>
+									</tbody>
 								</table>
-								
 							</div>
 						</div>
 					</div>
