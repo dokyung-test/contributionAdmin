@@ -49,7 +49,7 @@
 	$(function() {
 
 		/* Q&A 답변창 */
-		$("a")
+		$("p")
 				.click(
 						function() {
 							var param = "num=" + $(this).attr("title");
@@ -319,7 +319,7 @@
 													<td style="font-size: 15px">답변완료</td>
 												</c:if>
 												<td style="font-size: 15px">${dto.nickname}</td>
-												<td style="font-size: 15px"><a href="#" title="${dto.board_idx}">${dto.subject}</a></td>
+												<td style="font-size: 15px"><p title="${dto.board_idx}"><a href="#">${dto.subject}</a></p></td>
 												<td style="font-size: 15px">
 														<fmt:formatDate value="${dto.register_date}"
 															pattern="yyyy년 MM월 dd일" /></td>
