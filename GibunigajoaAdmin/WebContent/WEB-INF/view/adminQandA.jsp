@@ -136,6 +136,7 @@
 	overflow: auto; /* Enable scroll if needed */
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	padding: 3em;
 }
 /* 입력칸 스타일 */
 .a {
@@ -284,14 +285,18 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div class="container-fluid" style="width:1300px;">
 
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">Q&A</h1>
-					<p class="mb-4">Q&A 리스트</p>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
+					<div class="card-header py-3">
+							<h4 class="m-0 font-weight-bold text-primary">Q&A 답변하기</h4>
+							<a style="position: absolute; right: 50px; top: 10px;">
+							</a>
+						</div>
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable" width="100%"
