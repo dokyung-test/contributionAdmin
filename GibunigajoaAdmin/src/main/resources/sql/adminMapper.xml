@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+
+    <!-- Q&A 리스트 -->
+	<select id="qAndaList" resultType="admin.model.adminQandADto">
+		select * from users u,question_boards q where u.user_idx=q.user_idx;
+	</select>
+
+    <!-- Q&A 상세글 -->
+	<select id="qAndaContent" resultType="admin.model.adminQandADto">
+		select * from
+		question_boards q,users u
+		where u.user_idx=q.user_idx and board_idx=#{board_idx}
+	</select>
+
+	<!-- Q&A 답변 -->
+	<update id="qAndaUpdate">
+		update question_boards set
+		answer=#{answer},status_id=#{status_id}
+		where board_idx=#{board_idx}
+	</update>
+
+	<!-- 공지사항 리스트 -->
+	<select id="notice" resultType="admin.model.adminNoticeDto">
+		select * from notices;
+	</select>
+
+    <!-- 공지사항 추가 -->
+	<insert id="noticeInsert">
+		insert into
+		notices(subject,content,register_date)
+		values(#{subject},#{content},now())
+	</insert>
+	
+	 <!-- 공지사항 상세글 -->
+	<select id="noticeContent" resultType="admin.model.adminNoticeDto">
+		select * from
+		notices
+		where notice_idx=#{notice_idx}
+	</select>
+	
+	<!-- 공지사항 삭제 -->
+    <delete id="noticeDelete">
+      delete from notices where notice_idx=#{notice_idx}
+    </delete>
+    
+    <!-- 공지사항 수정 -->
+    <update id="noticeUpdate">
+     update notices set subject=#{subject},content=#{content},register_date=now() where notice_idx=#{notice_idx}
+    </update>
+
+</mapper>
