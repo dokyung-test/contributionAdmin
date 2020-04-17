@@ -93,21 +93,18 @@
 	border-bottom-right-radius: 7px;
 	border: 10px solid transparent;
 }
-/* 공지사항 작성 버튼 꾸미기 */
-#testBtn {
-	border-top-left-radius: 7px;
-	border-bottom-left-radius: 7px;
-	border-top-right-radius: 7px;
-	border-bottom-right-radius: 7px;
-	margin-right: -4px;
-	border: 1px solid skyblue;
-	background-color: #4e73df;
-	color: white;
-	padding: 5px;
-}
+
 
 #testBtn:hover {
 	color: white;
+}
+
+#leftTd{
+	padding: 10px;
+	width: 12%;
+}
+#rightTd{
+
 }
 
 </style>
@@ -263,37 +260,40 @@
 						</div>
 						<div class="table-responsive">
 							<div class="card-body">
-								<table>
+								<table style="width: 80%; margin-bottom: 20px;">
 								<form:form commandName="requestProgram" action="/Sample/admin/updateApproval.do">
  								<input type = "hidden" id = "organization_id" name = "organization_id" value = "${requestProgram.organization_id}"/>
- <input type = "hidden" id = "program_id" name = "program_id" value = "${requestProgram.program_id}"/>
-<tr><td>프로그램명 : </td><td>${requestProgram.program_subject}</td></tr>
-<tr><td>분류 : </td><td>${typeValue}</td></tr>
-<tr><td>모집시작일  : </td><td>${requestProgram.start_date}</td></tr>
-<tr><td>모집종료일 : </td><td>${requestProgram.end_date}</td></tr>
-<tr><td>목표금액 : </td><td>${requestProgram.target_amount }</td></tr>
-<tr><td>모집목적 : </td><td>${requestProgram.purpose}</td></tr>
-<tr><td>모집내용(요약) : </td><td>${requestProgram.summary}</td></tr>
-<tr><td>모집내용(상세) : </td><td>${requestProgram.content}</td></tr>
-<tr><td>단체URL : </td><td>${requestProgram.organization_url}</td></tr>
-<tr><td>은행명 : </td><td>${requestProgram.bank_name}</td></tr>
-<tr><td>계좌번호 : </td><td>${requestProgram.account}</td></tr>
-<!-- form안에 버튼은 type을 지정해주지 않으면 default submit으로 움직인다. type을 지정해줄것! -->
-<tr><td>연락처 : </td><td>${requestProgram.phone_number}</td></tr>
-<tr><td>대표자명 : </td><td>${requestProgram.representative}</td></tr>
-
-<tr><td>
-	<c:choose>
-	<c:when test="${requestProgram.approval_flg == 0 }">
-	<form:button type = "button" onclick = "updateApprovalFlg(1)">승인</form:button>
-	</c:when>
-	<c:when test="${requestProgram.approval_flg == 1 }">
-	<form:button type = "button" onclick = "updateApprovalFlg(0)">승인취소</form:button>
-	</c:when>
-	</c:choose>
-<form:button type = "button" onclick = "window.location='programList.do'">목록으로</form:button>
-</td></tr></form:form>
-</table>
+ 								<input type = "hidden" id = "program_id" name = "program_id" value = "${requestProgram.program_id}"/>
+								<tr><td id="leftTd">프로그램명 : </td><td>${requestProgram.program_subject}</td></tr>
+								<tr><td id="leftTd">분류 : </td><td>${typeValue}</td></tr>
+								<tr><td id="leftTd">모집시작일  : </td><td>${requestProgram.start_date}</td></tr>
+								<tr><td id="leftTd">모집종료일 : </td><td>${requestProgram.end_date}</td></tr>
+								<tr><td id="leftTd">목표금액 : </td><td>${requestProgram.target_amount }</td></tr>
+								<tr><td id="leftTd">모집목적 : </td><td>${requestProgram.purpose}</td></tr>
+								<tr><td id="leftTd">모집내용(요약) : </td><td id="rightTd">${requestProgram.summary}</td></tr>
+								<tr><td id="leftTd">모집내용(상세) : </td><td>${requestProgram.content}</td></tr>
+								<tr><td id="leftTd">단체URL : </td><td>${requestProgram.organization_url}</td></tr>
+								<tr><td id="leftTd">은행명 : </td><td>${requestProgram.bank_name}</td></tr>
+								<tr><td id="leftTd">계좌번호 : </td><td>${requestProgram.account}</td></tr>
+								<!-- form안에 버튼은 type을 지정해주지 않으면 default submit으로 움직인다. type을 지정해줄것! -->
+								<tr><td id="leftTd">연락처 : </td><td>${requestProgram.phone_number}</td></tr>
+								<tr><td id="leftTd">대표자명 : </td><td>${requestProgram.representative}</td></tr>
+								<tr><td>
+								<c:choose>
+								<c:when test="${requestProgram.approval_flg == 0 }">
+								<form:button type = "button" onclick = "updateApprovalFlg(1)">승인</form:button>
+								</c:when>
+								<c:when test="${requestProgram.approval_flg == 1 }">
+								<form:button type = "button" onclick = "updateApprovalFlg(0)">승인취소</form:button>
+								</c:when>
+								</c:choose>
+								</td>
+								<td>
+								<form:button type = "button" onclick = "window.location='programList.do'">목록으로</form:button>
+								</td></tr>
+								</form:form>
+								
+								</table>
 								
 							</div>
 						</div>
