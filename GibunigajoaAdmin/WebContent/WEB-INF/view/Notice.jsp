@@ -210,19 +210,25 @@
 			</a></li>
 			<br>
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="#"
-				data-toggle="collapse" data-target="#collapseTwo"
-				aria-expanded="true" aria-controls="collapseTwo"> <span
-					style="font-size: 18px;">회원 관리</span>
+			<li class="nav-item">
+			<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+				<span style="font-size: 18px;">회원 관리</span>
 			</a>
+<<<<<<< HEAD
 <<<<<<< HEAD
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           		<div class="bg-white py-2 collapse-inner rounded">
             		<a class="collapse-item" href="memberListType.do?type=1">회원 List</a>
+=======
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          		<div class="bg-white py-2 collapse-inner rounded">
+            		<a class="collapse-item" href="#">회원 List</a>
+>>>>>>> temp
             		<a class="collapse-item" href="#">회원 Chart</a>
             	</div>
             	</div>
 			</li>
+<<<<<<< HEAD
 =======
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
@@ -232,12 +238,14 @@
 					</div>
 				</div></li>
 >>>>>>> temp
+=======
+>>>>>>> temp
 			<br>
+								
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
 
 		</ul>
-		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">

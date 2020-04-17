@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="true"%>
@@ -45,13 +46,17 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
-<script type="text/javascript">
-	function QandAContent(a) {
-
-		location.href="QandAContent.do?board_idx="+a;
-	};
-	</script>
-
+<style>
+/* 입력칸 스타일 */
+.a {
+	color: black;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	border: 10px solid transparent;
+}
+</style>
 </head>
 
 <body id="page-top">
@@ -97,15 +102,6 @@
 				aria-expanded="true" aria-controls="collapseTwo"> <span
 					style="font-size: 18px;">회원 관리</span>
 			</a>
-<<<<<<< HEAD
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          		<div class="bg-white py-2 collapse-inner rounded">
-            		<a class="collapse-item" href="memberListType.do?type=1">회원 List</a>
-            		<a class="collapse-item" href="#">회원 Chart</a>
-            	</div>
-            	</div>
-			</li>
-=======
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
@@ -113,7 +109,6 @@
 							class="collapse-item" href="#">회원 Chart</a>
 					</div>
 				</div></li>
->>>>>>> temp
 			<br>
 
 			<!-- Divider -->
@@ -200,118 +195,124 @@
 				</nav>
 				<!-- End of Topbar -->
 
-				<!-- Begin Page Content -->
-				<div class="container-fluid" style="width: 1300px;">
 
-					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">Q&A</h1>
+				<section class="ftco-section">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-12">
+								<div class="wrapper">
+									<form action="update.do" ,method="post">
+										<h1 class="mb-4">Q&A답변하기</h1>
+										<button onclick="returnNotice()" class="btn btn-primary"
+											style="position: relative; left: 800px; width: 250px; font-size: 20px;">목록</button>
+										<div class="row no-gutters mb-5" style="background: #e8edf0;">
+											<div class="contact-wrap w-100 p-md-5 p-4">
+												<div id="form-message-warning" class="mb-4"></div>
+												<div class="row">
+													<div class="col-md-12" style="display: inline;">
 
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">Q&A 답변하기</h4>
-							<a style="position: absolute; right: 50px; top: 10px;"> </a>
-						</div>
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									style="table-layout: fixed;" cellspacing="0">
-									<thead>
-										<tr>
-											<th style="width: 100px;">답변상태</th>
-											<th style="width: 100px;">문의자</th>
-											<th>제목</th>
-											<th style="width: 150px;">답변일</th>
+														<h3>${list.subject}</h3>
 
-										</tr>
-									</thead>
+													</div>
+													<hr width="1000px" color="black" noshade />
+													<ul style="width: 100%; position: relative; top: 10px;">
+														<li
+															style="display: inline; color: black; position: relative; right: 30px;">작성자
+															:${list.nickname}</li>
 
-									<tbody>
-										<c:forEach var="dto" items="${list}">
-											<tr title="${dto.board_idx}">
-												<c:if test="${dto.status_id eq 1}">
-													<td style="font-size: 15px">접수중</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 2} ">
-													<td style="font-size: 15px">처리중</td>
-												</c:if>
-												<c:if test="${dto.status_id eq 3}">
-													<td style="font-size: 15px">답변완료</td>
-												</c:if>
-												<td style="font-size: 15px">${dto.nickname}</td>
-												<td style="font-size: 15px">
-														<a href="#" onclick="QandAContent(${dto.board_idx})">${dto.subject}</a>
-													</td>
-												<td style="font-size: 15px"><fmt:formatDate
-														value="${dto.register_date}" pattern="yyyy년 MM월 dd일" /></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+														<li
+															style="display: inline; color: black; position: relative; left: 450px;">작성일
+															: <fmt:formatDate value="${list.register_date}"
+																pattern="yyyy년 MM월 dd일" />
+														</li>
+													</ul>
+													<hr width="1000px" color="black" noshade />
+													<div>문의내용</div>
+													<textarea class="form-control" name=subject id="subject"
+														style="margin: auto; display: inline-block;" rows="25"
+														readonly="readonly">${list.content}</textarea>
+													<div>답변내용</div>
+													<textarea class="form-control" name=subject id="subject"
+														style="margin: auto; display: inline-block;" rows="25"
+														readonly="readonly">${list.content}</textarea>
+												</div>
+												<div class="col-md-12">
+													<div class="form-group">
+														<input type="button" onclick="closeModal()" id="cancel"
+															style="float: right; height: 50px; width: 150px; font-size: 20px;"
+															value="취소" class="btn btn-primary" /> <input
+															type="submit" id="hidden"
+															style="float: right; margin-right: 1%; height: 50px; width: 150px; font-size: 20px;"
+															value="답변하기" class="btn btn-primary" />
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<!-- /.container-fluid -->
+				</section>
+
 			</div>
-			<!-- End of Main Content -->
+			<!-- End of Content Wrapper -->
+
 		</div>
-		<!-- End of Content Wrapper -->
+		<!-- End of Page Wrapper -->
 
-	</div>
-	<!-- End of Page Wrapper -->
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top"> <i
+			class="fas fa-angle-up"></i>
+		</a>
 
-	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
-	</a>
-
-	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-					<button class="close" type="button" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">A?</span>
-					</button>
-				</div>
-				<div class="modal-body">Select "Logout" below if you are ready
-					to end your current session.</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button"
-						data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
+		<!-- Logout Modal-->
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to
+							Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">A?</span>
+						</button>
+					</div>
+					<div class="modal-body">Select "Logout" below if you are
+						ready to end your current session.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button"
+							data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary" href="login.html">Logout</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Bootstrap core JavaScript-->
-	<script
-		src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Bootstrap core JavaScript-->
+		<script
+			src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-	<!-- Core plugin JavaScript-->
-	<script
-		src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+		<!-- Core plugin JavaScript-->
+		<script
+			src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-	<!-- Custom scripts for all pages-->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script
+			src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
 
-	<!-- Page level plugins -->
-	<script
-		src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-	<!-- Page level custom scripts -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/demo/datatables-demo.js"></script>
-
+		<!-- Page level plugins -->
+		<script
+			src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+		<!-- Page level custom scripts -->
+		<script
+			src="${pageContext.request.contextPath}/resources/js/demo/datatables-demo.js"></script>
 </body>
 
 </html>
