@@ -46,62 +46,9 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 <script>
-	$(function() {
-
-		/* 공지사항 작성 누를 시 입력 창 */
-		$("#testBtn").on('click', function() {
-			$("#modal").show();
-		});
-
-		$(".update")
-		.click(
-				function() {
-					var param = "num2=" + $(this).attr("title");
-					var url = "updateNoticeForm.do";
-					$
-							.ajax({
-								type : "post",
-								url : url,
-								data : param,
-								dataType : "json"
-							})
-							.done(
-									function(args) {
-                                        var notice_idx=args.notice_idx;
-										var subject = args.subject;
-										var content = args.content;
-
-										$("#subject2")
-												.append(
-														"<br class='a'><input type='text' name='subject' class='a' value='"+subject+"'>");
-										$("#content2")
-												.append(
-														"<br class='a'><textarea cols='50' rows='3' name='content' class='a' style='resize: none;'>"
-																		+ content
-																		+ "</textarea>");
-										$("#hidden")
-										.append(
-												"<input type='hidden' name='notice_idx' value='"+notice_idx+"' />");
-									});
-					$("#updatemodal").show();
-					return false;
-				});
-
-	});
-	function deletelist(a){
-	      if(confirm("삭제하시겠습니까?")){
-	            location.href="deleteNotice.do?notice_idx="+a;
-
-	          }else{
-	            close();
-	              }
-			}
-
-	function closeModal() {
-		$('.searchModal').hide();
-		$('#updatemodal').hide();
-		$('.a').remove();
-	};
+function typeCheck(var num){
+	location.href="memberListType.do?type="+num;
+}
 </script>
 
 <style>
@@ -143,7 +90,6 @@
 #testBtn:hover {
 	color: white;
 }
-b
 </style>
 </head>
 
@@ -191,7 +137,7 @@ b
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           		<div class="bg-white py-2 collapse-inner rounded">
-            		<a class="collapse-item" href="#">회원 List</a>
+            		<a class="collapse-item" href="memberListType.do?type=1">회원 List</a>
             		<a class="collapse-item" href="#">회원 Chart</a>
             	</div>
             	</div>
@@ -287,50 +233,97 @@ b
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">프로그램 승인</h1>
+					<h1 class="h3 mb-2 text-gray-800">회원 List</h1>
 					<!-- <p class="mb-4">공지사항 올리기</p> -->
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">프로그램 신청 List</h4>
+						<input type = "button" value="개인회원" onclick = "typeCheck(1)">
+						<input type = "button" value="단체회원" onclick = "typeCheck(2)">
+								
+							<!-- <h4 class="m-0 font-weight-bold text-primary">프로그램 신청 List</h4> -->
 						</div>
 						<div class="table-responsive">
 							<div class="card-body">
-
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+							${userList.user_id}
+							${userList.user_type_id}
+							<%--개인 회원 리스트  --%>
+							<%-- <c:choose>
+								<c:when test="${memberList.user_type_id == 1 || memberList.user_type_id == 3}">
+									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<c:if test="${!empty memberList}">
 									<thead>
 										<tr>
-											<th>프로그램 제목</th>
-											<th>시작일자</th>
-											<th>종료일자</th>
-											<th>승인상태</th>
+											<th>ID</th>
+											<th>이름</th>
+											<th>닉네임</th>
+											<th>등급</th>
+											<th>가입일</th>
 										</tr>
 									</thead>
 
 									<tbody>
-									<c:if test="${!empty programList}">
-										<c:forEach var="requestProgram" items="${programList}">
+									
+										<c:forEach var="memberList" items="${memberList}">
 											<tr>
-												<td style="font-size: 15px">
-												<a href = "showProgramContent.do?program_id=${requestProgram.program_id}&organization_id=${requestProgram.organization_id}">${requestProgram.program_subject}</a>
-												</td>
-												<td style="font-size: 15px"><p><fmt:formatDate value="${requestProgram.start_date}" pattern = "yyyy-MM-dd"/></td>
-												<td style="font-size: 15px"><fmt:formatDate value="${requestProgram.end_date}" pattern="yyyy-MM-dd"/></td>
-												<td style="font-size: 15px">
-												<c:if test="${requestProgram.approval_flg == 0}">미승인</c:if>
-												<c:if test="${requestProgram.approval_flg == 1}">승인</c:if>
-												</td>
+												<td style="font-size: 15px">${memberList.user_id}</td>
+												<td style="font-size: 15px">${memberList.name}</td>
+												<td style="font-size: 15px">${memberList.nickname}</td>
+												<td style="font-size: 15px">${memberList.grade}</td>
+												<td style="font-size: 15px"><fmt:formatDate value="${memberList.register_date}" pattern = "yyyy-MM-dd"/></td>
 											</tr>
 										</c:forEach>
 										</c:if>
-										<c:if test="${empty programList }">
+										<c:if test="${empty memberList}">
 											<tr>
-												<td rowspan="4">신청한 프로그램이 없습니다.</td>
+												<td rowspan="4">가입한 회원이 없습니다.</td>
 											</tr>
 										</c:if>
 									</tbody>
 								</table>
+								</c:when>
+								
+								기관 리스트 
+								<c:when test="${user_type_id == 2 }">
+									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<thead>
+										<tr>
+											<th>기관등록번호</th>
+											<th>기관명</th>
+											<th>대표자</th>
+											<th>ID</th>
+											<th>주소</th>
+											<th>홈페이지</th>
+											<th>가입일</th>
+										</tr>
+									</thead>
+
+									<tbody>
+									<c:if test="${!empty memberList}">
+										<c:forEach var="memberList" items="${memberList}">
+											<tr>
+												<td style="font-size: 15px">${memberList.organization_id}</td>
+												<td style="font-size: 15px">${memberList.nanmmByNm}</td>
+												<td style="font-size: 15px">${memberList.rprsntvNm}</td>
+												<td style="font-size: 15px">${memberList.user_id}</td>
+												<td style="font-size: 15px">${memberList.adress}</td>
+												<td style="font-size: 15px">${memberList.hmpadres}</td>
+												<td style="font-size: 15px"><fmt:formatDate value="${memberList.register_date}" pattern = "yyyy-MM-dd"/></td>
+											</tr>
+										</c:forEach>
+										</c:if>
+										<c:if test="${empty memberList }">
+											<tr>
+												<td rowspan="4">가입한 단체가 없습니다.</td>
+											</tr>
+										</c:if>
+									</tbody>
+								</table>
+								</c:when>
+							</c:choose>
+ --%>
+								
 							</div>
 						</div>
 					</div>

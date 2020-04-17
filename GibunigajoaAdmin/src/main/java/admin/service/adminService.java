@@ -7,11 +7,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import admin.model.OrganizationDto;
 import admin.model.ProgramDao;
 import admin.model.ProgramDto;
 import admin.model.ProgramImageDao;
 import admin.model.ProgramImageDto;
 import admin.model.TypeDao;
+import admin.model.UserDto;
 import admin.model.adminDao;
 import admin.model.adminNoticeDto;
 import admin.model.adminQandADto;
@@ -126,6 +128,14 @@ public class adminService {
 		return programDao.updateApprovalFlg(organization_id, program_id, approval_flg);
 	}
 	
+	//개인회원 리스트
+	public List<UserDto> userList(){
+		return dao.userList();
+	}
 	
+	//단체회원 리스트
+	public List<OrganizationDto> organizationList(){
+		return dao.organizationList();
+	}
 	
 }

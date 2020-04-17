@@ -75,4 +75,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id = "selectProgramImages" parameterType = "map" resultType = "String">
 		select stored_file_name from program_images where program_id = #{program_id} and organization_id = #{organization_id}
 	</select>
+	
+	<!--개인회원 리스트  -->
+	<select id = "userList" resultType = "admin.model.UserDto">
+		select user_type_id, user_id, name, nickname, grade, register_date from users where user_type_id = 1 OR user_type_id = 3
+	</select>
+	<!--기부단체 회원 리스트 -->
+	<select id = "organizationList" resultType = "admin.model.OrganizationDto">
+		select o.organization_id, o.nanmmByNm, o.rprsntvNm, o.adres, o.hmpadres, u.user_type_id, u.user_id, u.register_date from organizations as o left join users as u on u.organization_id = o.organization_id and u.user_type_id = 2
+	</select>
 </mapper>

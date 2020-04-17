@@ -14,11 +14,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import admin.model.OrganizationDto;
 import admin.model.ProgramDto;
+import admin.model.ProgramImageDto;
+import admin.model.UserDto;
 import admin.model.adminNoticeDto;
 import admin.model.adminQandADto;
 import admin.service.adminService;
-import admin.model.ProgramImageDto;
 
 @Controller
 public class adminController {
@@ -124,4 +126,24 @@ public class adminController {
 	public int updateApprovalProgram(String organization_id, int program_id, int approval_flg) {
 		return service.updateApprovalFlg(organization_id, program_id, approval_flg);
 	}
+	
+	//개인회원 리스트 출력
+		@RequestMapping(value = "memberListType.do", method = RequestMethod.GET)
+		@ResponseBody
+		public ModelAndView memeberTypeList(int type) {
+			ModelAndView m = new ModelAndView("memberList");
+			if(type == 1) {
+				List<UserDto> u = service.userList();
+				m.addObject("userList", u);
+				System.out.println("u: "+u);
+				System.out.println("m: "+m.getModel());
+			}else {
+				List<OrganizationDto> o = service.organizationList();
+				m.addObject("memberList", o);
+			}
+			
+			return m;
+		}
+	
+	
 }

@@ -48,5 +48,15 @@ public class adminDao extends SqlSessionDaoSupport{
 		return getSqlSession().update("admin.noticeUpdate",notice_idx);
 	}
 	
+	//개인 회원 리스트 
+	public List<UserDto> userList(){
+		return getSqlSession().selectList("admin.userList");
+	}
+	
+	//단체회원 리스트 
+	public List<OrganizationDto> organizationList(){
+		return getSqlSession().selectList("admin.organizationList");
+	}
+	
 
 }
