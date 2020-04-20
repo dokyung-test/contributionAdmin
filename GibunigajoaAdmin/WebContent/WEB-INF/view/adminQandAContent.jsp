@@ -46,6 +46,12 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
+<script type="text/javascript">
+	function returnQandA() {
+		location.href = "adminQandA.do";
+	}
+</script>
+
 <style>
 /* 입력칸 스타일 */
 .a {
@@ -201,17 +207,17 @@
 						<div class="row justify-content-center">
 							<div class="col-md-12">
 								<div class="wrapper">
-									<form action="update.do" ,method="post">
-										<h1 class="mb-4">Q&A답변하기</h1>
-										<button onclick="returnNotice()" class="btn btn-primary"
-											style="position: relative; left: 800px; width: 250px; font-size: 20px;">목록</button>
+									<h1 class="mb-4">Q&A답변하기</h1>
+									<button onclick="returnQandA()" class="btn btn-primary"
+										style="position: relative; left: 800px; width: 250px; font-size: 20px;">목록</button>
+									<form action="qANDaUpdate.do" method="post">
 										<div class="row no-gutters mb-5" style="background: #e8edf0;">
 											<div class="contact-wrap w-100 p-md-5 p-4">
 												<div id="form-message-warning" class="mb-4"></div>
 												<div class="row">
 													<div class="col-md-12" style="display: inline;">
 
-														<h3>${list.subject}</h3>
+														<h2>${list.subject}</h2>
 
 													</div>
 													<hr width="1000px" color="black" noshade />
@@ -219,34 +225,38 @@
 														<li
 															style="display: inline; color: black; position: relative; right: 30px;">작성자
 															:${list.nickname}</li>
-
 														<li
-															style="display: inline; color: black; position: relative; left: 450px;">작성일
+															style="display: inline; color: black; position: relative; left: 20px;">
+															<div style="display: inline;">접수 상태</div> <select
+															name="status_id">
+																<option value="1">접수중</option>
+																<option value="2">처리중</option>
+																<option value="3">답변완료</option>
+														</select>
+														</li>
+														<li
+															style="display: inline; color: black; position: relative; left: 350px;">작성일
 															: <fmt:formatDate value="${list.register_date}"
 																pattern="yyyy년 MM월 dd일" />
 														</li>
 													</ul>
 													<hr width="1000px" color="black" noshade />
-													<div>문의내용</div>
+													<div style="font-size: 20px;">문의내용</div>
 													<textarea class="form-control" name=subject id="subject"
-														style="margin: auto; display: inline-block;" rows="25"
+														style="margin: auto; display: inline-block;" rows="20"
 														readonly="readonly">${list.content}</textarea>
-													<div>답변내용</div>
-													<textarea class="form-control" name=subject id="subject"
-														style="margin: auto; display: inline-block;" rows="25"
-														readonly="readonly">${list.content}</textarea>
+													<div style="font-size: 20px;">답변내용</div>
+													<textarea class="form-control" name=answer id="answers"
+														style="margin: auto; display: inline-block;" rows="20">${list.answer}</textarea>
 												</div>
 												<div class="col-md-12">
-													<div class="form-group">
-														<input type="button" onclick="closeModal()" id="cancel"
-															style="float: right; height: 50px; width: 150px; font-size: 20px;"
-															value="취소" class="btn btn-primary" /> <input
+													<div class="form-group"> <input
 															type="submit" id="hidden"
 															style="float: right; margin-right: 1%; height: 50px; width: 150px; font-size: 20px;"
 															value="답변하기" class="btn btn-primary" />
 													</div>
 												</div>
-
+                                                <input type="hidden" name="board_idx" value="${list.board_idx}"/>
 											</div>
 										</div>
 									</form>

@@ -47,7 +47,7 @@
 
 <script type="text/javascript">
 	function QandAContent(a) {
-
+		
 		location.href="QandAContent.do?board_idx="+a;
 	};
 	</script>
@@ -97,7 +97,6 @@
 				aria-expanded="true" aria-controls="collapseTwo"> <span
 					style="font-size: 18px;">회원 관리</span>
 			</a>
-<<<<<<< HEAD
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           		<div class="bg-white py-2 collapse-inner rounded">
             		<a class="collapse-item" href="memberListType.do?type=1">회원 List</a>
@@ -105,7 +104,6 @@
             	</div>
             	</div>
 			</li>
-=======
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
@@ -113,7 +111,6 @@
 							class="collapse-item" href="#">회원 Chart</a>
 					</div>
 				</div></li>
->>>>>>> temp
 			<br>
 
 			<!-- Divider -->
@@ -221,7 +218,7 @@
 											<th style="width: 100px;">답변상태</th>
 											<th style="width: 100px;">문의자</th>
 											<th>제목</th>
-											<th style="width: 150px;">답변일</th>
+											<th style="width: 150px;">문의날짜</th>
 
 										</tr>
 									</thead>
