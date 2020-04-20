@@ -1,8 +1,10 @@
 package admin.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+
 
 
 
@@ -56,6 +58,12 @@ public class adminDao extends SqlSessionDaoSupport{
 	//단체회원 리스트 
 	public List<OrganizationDto> organizationList(){
 		return getSqlSession().selectList("admin.organizationList");
+	}
+	
+	//login check
+	public UserDto loginCheck(HashMap<String, String> m) {
+		UserDto command = getSqlSession().selectOne("admin.loginCheck", m);
+		return command;
 	}
 	
 

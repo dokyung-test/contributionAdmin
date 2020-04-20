@@ -6,6 +6,6 @@
 </head>
 <body>
  
- <a href="adminQandA.do">어드민</a>
+ <a href="loginForm.do">어드민</a>
 </body>
 </html>

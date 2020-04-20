@@ -148,17 +148,9 @@
 			</a></li>
 			<br>
 			<!-- Nav Item - Tables -->
-			<li class="nav-item">
-			<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-				<span style="font-size: 18px;">회원 관리</span>
-			</a>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          		<div class="bg-white py-2 collapse-inner rounded">
-            		<a class="collapse-item" href="memberListType.do?type=1">회원 List</a>
-            		<a class="collapse-item" href="#">회원 Chart</a>
-            	</div>
-            	</div>
-			</li>
+			<li class="nav-item"><a class="nav-link" href="memberListType.do?type=1">
+					<span style="font-size: 18px;">회원 List</span>
+			</a></li>
 			<br>
 								
 			<!-- Divider -->

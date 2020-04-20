@@ -138,4 +138,9 @@ public class adminService {
 		return dao.organizationList();
 	}
 	
+	//로그인 체크 
+	public UserDto loginCheck(HashMap<String, String> m) {
+		return dao.loginCheck(m);
+	}
+	
 }
