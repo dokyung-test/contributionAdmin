@@ -181,7 +181,7 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid" style="width: 1300px;">
+				<div class="container-fluid">
 
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">Q&A</h1>

@@ -193,11 +193,11 @@
 				<!-- End of Topbar -->
 
 
-				<section class="ftco-section">
+
 					<div class="container">
-						<div class="row justify-content-center">
+						
 							<div class="col-md-12">
-								<div class="wrapper">
+							
 									<h1 class="mb-4">Q&A답변하기</h1>
 									<button onclick="returnQandA()" class="btn btn-primary"
 										style="position: relative; left: 800px; width: 250px; font-size: 20px;">목록</button>
@@ -251,11 +251,11 @@
 											</div>
 										</div>
 									</form>
-								</div>
+								
 							</div>
 						</div>
-					</div>
-				</section>
+					
+
 
 			</div>
 			<!-- End of Content Wrapper -->
