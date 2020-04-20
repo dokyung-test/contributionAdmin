@@ -84,4 +84,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id = "organizationList" resultType = "admin.model.OrganizationDto">
 		select o.organization_id, o.nanmmByNm, o.rprsntvNm, o.adres, o.hmpadres, u.user_type_id, u.user_id, u.register_date from organizations as o left join users as u on u.organization_id = o.organization_id and u.user_type_id = 2
 	</select>
+	
+	<!--로그인 체크 -->
+	<select id="loginCheck" parameterType="map" resultType="admin.model.UserDto">select * from users where user_id=#{user_id} and password=#{password}</select>
+
 </mapper>

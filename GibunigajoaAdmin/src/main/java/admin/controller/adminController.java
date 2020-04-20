@@ -1,9 +1,11 @@
 package admin.controller;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import admin.model.OrganizationDto;
 import admin.model.ProgramDto;
@@ -146,6 +149,46 @@ public class adminController {
 			
 			return m;
 		}
-	
+		
+		@RequestMapping("/loginForm.do")
+		public String logoutForm() {
+			return "loginForm";
+		}
+		
+		//로그인 체크 
+		@RequestMapping(value = "/loginCheck.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+		@ResponseBody
+		public void loginCheck(String user_id, String password, HttpSession session, HttpServletResponse response) throws Exception{
+			
+			HashMap<String, String> m = new HashMap<String, String>();
+			m.put("user_id", user_id);
+			m.put("password", password);
+			System.out.println(m.get("user_id")+" "+m.get("password"));
+			try {
+				UserDto command = service.loginCheck(m);
+				
+				session.setAttribute("user_id", command.getUser_id());	
+				session.setAttribute("nickname", command.getNickname());	
+				
+			}catch (NullPointerException e) {
+				response.setContentType("text/html; charset=UTF-8"); 
+				PrintWriter out = response.getWriter(); 
+				out.println("<script>alert('ID 혹은 비밀번호가 일치하지 않습니다.'); location.href='loginForm.do'; </script>"); 
+				out.flush();
+			}finally {
+				response.setContentType("text/html; charset=UTF-8"); 
+				PrintWriter out = response.getWriter(); 
+				out.println("<script>location.href='adminQandA.do'; </script>"); 
+				out.flush();
+			}
+			
+		}
+		
+		
+		@RequestMapping("/logout.do")
+		public String logoutForm(HttpSession session) {
+			session.invalidate();
+			return "loginForm";
+		}
 	
 }
