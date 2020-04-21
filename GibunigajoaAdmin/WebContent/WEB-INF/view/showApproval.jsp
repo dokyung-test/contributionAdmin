@@ -258,13 +258,13 @@
  								<input type = "hidden" id = "program_id" name = "program_id" value = "${requestProgram.program_id}"/>
 								<tr><td id="leftTd">프로그램명 : </td><td>${requestProgram.program_subject}</td></tr>
 								<tr><td id="leftTd">분류 : </td><td>${typeValue}</td></tr>
-								<tr><td id="leftTd">모집시작일  : </td><td>${requestProgram.start_date}</td></tr>
-								<tr><td id="leftTd">모집종료일 : </td><td>${requestProgram.end_date}</td></tr>
+								<tr><td id="leftTd">모집시작일  : </td><td><fmt:formatDate value="${requestProgram.start_date}" pattern="yyyy-MM-dd"/></td></tr>
+								<tr><td id="leftTd">모집종료일 : </td><td><fmt:formatDate value="${requestProgram.end_date}" pattern="yyyy-MM-dd"/></td></tr>
 								<tr><td id="leftTd">목표금액 : </td><td>${requestProgram.target_amount }</td></tr>
 								<tr><td id="leftTd">모집목적 : </td><td>${requestProgram.purpose}</td></tr>
 								<tr><td id="leftTd">모집내용(요약) : </td><td id="rightTd">${requestProgram.summary}</td></tr>
 								<tr><td id="leftTd">모집내용(상세) : </td><td>${requestProgram.content}</td></tr>
-								<tr><td id="leftTd">단체URL : </td><td>${requestProgram.organization_url}</td></tr>
+								<tr><td id="leftTd">단체URL : </td><td><a href="${requestProgram.organization_url}">${requestProgram.organization_url}</a></td></tr>
 								<tr><td id="leftTd">은행명 : </td><td>${requestProgram.bank_name}</td></tr>
 								<tr><td id="leftTd">계좌번호 : </td><td>${requestProgram.account}</td></tr>
 								<!-- form안에 버튼은 type을 지정해주지 않으면 default submit으로 움직인다. type을 지정해줄것! -->
