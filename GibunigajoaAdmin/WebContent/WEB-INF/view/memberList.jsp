@@ -274,7 +274,20 @@ function logout(){
 												<td style="font-size: 15px">${user.user_id}</td>
 												<td style="font-size: 15px">${user.name}</td>
 												<td style="font-size: 15px">${user.nickname}</td>
-												<td style="font-size: 15px">${user.grade}</td>
+												<c:choose>
+													<c:when test="${user.grade eq 0}">
+													<td style="font-size: 15px"><img src="${pageContext.request.contextPath}/resources/img/battery_0.png" alt="0"></td>
+													</c:when>
+													<c:when test="${user.grade eq 1}">
+													<td style="font-size: 15px"><img src="${pageContext.request.contextPath}/resources/img/battery_1.png" alt="1"></td>
+													</c:when>
+													<c:when test="${user.grade eq 2}">
+													<td style="font-size: 15px"><img src="${pageContext.request.contextPath}/resources/img/battery_2.png" alt="2"></td>
+													</c:when>
+													<c:when test="${user.grade eq 3}">
+													<td style="font-size: 15px"><img src="${pageContext.request.contextPath}/resources/img/battery_3.png" alt="3"></td>
+													</c:when>
+												</c:choose>
 												<td style="font-size: 15px"><fmt:formatDate value="${user.register_date}" pattern = "yyyy-MM-dd"/></td>
 											</tr>
 										</c:forEach>
