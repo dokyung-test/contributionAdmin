@@ -46,19 +46,22 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
+
+
 <script type="text/javascript">
+
 	function returnQandA() {
 		location.href = "adminQandA.do";
 	}
 
 	//logout시 controller session 삭제 처리로 이동  
-	function logout(){
-				if(confirm("로그아웃 하시겠습니까?")){
-					//kakaoLogOut();
-					location.href = "logout.do"; 
-				}else{
-							
-				}
+	function logout() {
+		if (confirm("로그아웃 하시겠습니까?")) {
+			//kakaoLogOut();
+			location.href = "logout.do";
+		} else {
+
+		}
 	}
 </script>
 
@@ -113,8 +116,9 @@
 			</a></li>
 			<br>
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="memberListType.do?type=1">
-					<span style="font-size: 18px;">회원 List</span>
+			<li class="nav-item"><a class="nav-link"
+				href="memberListType.do?type=1"> <span style="font-size: 18px;">회원
+						List</span>
 			</a></li>
 			<br>
 
@@ -172,17 +176,18 @@
 						<li class="nav-item dropdown no-arrow"><a
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> 
-							
-							<span class="mr-2 d-none d-lg-inline text-gray-600 small"><b>${nickname}</b>님이 로그인 중입니다.</span> 
+							aria-expanded="false"> <span
+								class="mr-2 d-none d-lg-inline text-gray-600 small"><b>${nickname}</b>님이
+									로그인 중입니다.</span>
 						</a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								
+
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="javascript:void(0);" onclick="logout()"> 
-								<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+								<a class="dropdown-item" href="javascript:void(0);"
+									onclick="logout()"> <i
+									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 									Logout
 								</a>
 							</div></li>
@@ -194,67 +199,67 @@
 
 
 
-					<div class="container">
-						
-							<div class="col-md-12">
-							
-									<h1 class="mb-4">Q&A답변하기</h1>
-									<button onclick="returnQandA()" class="btn btn-primary"
-										style="position: relative; left: 800px; width: 250px; font-size: 20px;">목록</button>
-									<form action="qANDaUpdate.do" method="post">
-										<div class="row no-gutters mb-5" style="background: #e8edf0;">
-											<div class="contact-wrap w-100 p-md-5 p-4">
-												<div id="form-message-warning" class="mb-4"></div>
-												<div class="row">
-													<div class="col-md-12" style="display: inline;">
+				<div class="container">
 
-														<h2>${list.subject}</h2>
+					<div class="col-md-12">
 
-													</div>
-													<hr width="1000px" color="black" noshade />
-													<ul style="width: 100%; position: relative; top: 10px;">
-														<li
-															style="display: inline; color: black; position: relative; right: 30px;">작성자
-															:${list.nickname}</li>
-														<li
-															style="display: inline; color: black; position: relative; left: 20px;">
-															<div style="display: inline;">접수 상태</div> <select
-															name="status_id">
-																<option value="1">접수중</option>
-																<option value="2">처리중</option>
-																<option value="3">답변완료</option>
-														</select>
-														</li>
-														<li
-															style="display: inline; color: black; position: relative; left: 350px;">작성일
-															: <fmt:formatDate value="${list.register_date}"
-																pattern="yyyy년 MM월 dd일" />
-														</li>
-													</ul>
-													<hr width="1000px" color="black" noshade />
-													<div style="font-size: 20px;">문의내용</div>
-													<textarea class="form-control" name=subject id="subject"
-														style="margin: auto; display: inline-block;" rows="20"
-														readonly="readonly">${list.content}</textarea>
-													<div style="font-size: 20px;">답변내용</div>
-													<textarea class="form-control" name=answer id="answers"
-														style="margin: auto; display: inline-block;" rows="20">${list.answer}</textarea>
-												</div>
-												<div class="col-md-12">
-													<div class="form-group"> <input
-															type="submit" id="hidden"
-															style="float: right; margin-right: 1%; height: 50px; width: 150px; font-size: 20px;"
-															value="답변하기" class="btn btn-primary" />
-													</div>
-												</div>
-                                                <input type="hidden" name="board_idx" value="${list.board_idx}"/>
-											</div>
+						<h1 class="mb-4">Q&A답변하기</h1>
+						<button onclick="returnQandA()" class="btn btn-primary"
+							style="position: relative; left: 800px; width: 250px; font-size: 20px;">목록</button>
+						<form action="qANDaUpdate.do" method="post">
+							<div class="row no-gutters mb-5" style="background: #e8edf0;">
+								<div class="contact-wrap w-100 p-md-5 p-4">
+									<div id="form-message-warning" class="mb-4"></div>
+									<div class="row">
+										<div class="col-md-12" style="display: inline;">
+
+											<h2>${list.subject}</h2>
+
 										</div>
-									</form>
-								
+										<hr width="1000px" color="black" noshade />
+										<ul style="width: 100%; position: relative; top: 10px;">
+											<li
+												style="display: inline; color: black; position: relative; right: 30px;">작성자
+												:${list.nickname}</li>
+											<li
+												style="display: inline; color: black; position: relative; left: 20px;">
+												<div style="display: inline;">접수 상태</div> <select
+												name="status_id">
+													<option value="1">접수중</option>
+													<option value="2">처리중</option>
+													<option value="3">답변완료</option>
+											</select>
+											</li>
+											<li
+												style="display: inline; color: black; position: relative; left: 350px;">작성일
+												: <fmt:formatDate value="${list.register_date}"
+													pattern="yyyy년 MM월 dd일" />
+											</li>
+										</ul>
+										<hr width="1000px" color="black" noshade />
+										<div style="font-size: 20px;">문의내용</div>
+										<textarea class="form-control" name=subject id="subject"
+											style="margin: auto; display: inline-block;" rows="20"
+											readonly="readonly">${list.content}</textarea>
+										<div style="font-size: 20px;">답변내용</div>
+										<textarea class="form-control" name=answer id="summernote"
+											style="margin: auto; display: inline-block;" rows="20">${list.answer}</textarea>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="submit" id="hidden"
+												style="float: right; margin-right: 1%; height: 50px; width: 150px; font-size: 20px;"
+												value="답변하기" class="btn btn-primary" />
+										</div>
+									</div>
+									<input type="hidden" name="board_idx" value="${list.board_idx}" />
+								</div>
 							</div>
-						</div>
-					
+						</form>
+
+					</div>
+				</div>
+
 
 
 			</div>
@@ -268,29 +273,6 @@
 			class="fas fa-angle-up"></i>
 		</a>
 
-		<!-- Logout Modal-->
-		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Ready to
-							Leave?</h5>
-						<button class="close" type="button" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">A?</span>
-						</button>
-					</div>
-					<div class="modal-body">Select "Logout" below if you are
-						ready to end your current session.</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary" type="button"
-							data-dismiss="modal">Cancel</button>
-						<a class="btn btn-primary" href="login.html">Logout</a>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<!-- Bootstrap core JavaScript-->
 		<script

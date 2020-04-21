@@ -45,6 +45,19 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
+
+
+
+
+<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>  -->
+
+
 <script>
 	$(function() {
 
@@ -52,6 +65,13 @@
 		$("#testBtn").on('click', function() {
 			$("#modal").show();
 		});
+
+/* 		  $('#summernote').summernote({
+	             height: 300,                 // set editor height
+	             minHeight: null,             // set minimum height of editor
+	             maxHeight: null,             // set maximum height of editor
+	             focus: true                  // set focus to editable area after initializing summernote
+	     }); */
 
 		
         /* 수정 클릭시 */
@@ -374,7 +394,7 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="label" style="font-size: 25px">공지 내용</label>
-													<textarea name="content" class="form-control" cols="50"
+													<textarea name="content" id="summernote" class="form-control" cols="50"
 														rows="10" placeholder="공지할 내용을 작성해 주세요."></textarea>
 												</div>
 											</div>
