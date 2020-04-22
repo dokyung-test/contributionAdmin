@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="true"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page session="true"%>
 <%@ page isELIgnored="false"%>
 
 <!-- -------------------------------------관리자 Q&A 리스트 페이지------------------------------------------------- -->
