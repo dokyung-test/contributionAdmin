@@ -59,6 +59,11 @@
 			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
 			p:paramName="language"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+            <mvc:mapping path="/*.do"/>
+            <mvc:exclude-mapping path="/log*.do"/>
+            <bean class="admin.controller.SessionCheckInterceptor" />
+        </mvc:interceptor>
 	</mvc:interceptors>
 	
 	
