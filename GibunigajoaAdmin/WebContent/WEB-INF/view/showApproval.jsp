@@ -81,33 +81,6 @@
 </script>
 
 <style>
-/* modal창의 배경 */
-.searchModal {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 10; /* Sit on top */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
-/* 입력칸 스타일 */
-.a {
-	color: black;
-	border-top-left-radius: 7px;
-	border-bottom-left-radius: 7px;
-	border-top-right-radius: 7px;
-	border-bottom-right-radius: 7px;
-	border: 10px solid transparent;
-}
-
-
-#testBtn:hover {
-	color: white;
-}
 
 #leftTd{
 	padding: 10px;
@@ -115,8 +88,6 @@
 	width: 12%;
 	font-weight: bold;
 }
-
-
 </style>
 </head>
 

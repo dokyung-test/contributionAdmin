@@ -46,64 +46,6 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 <script>
-	$(function() {
-
-		/* 공지사항 작성 누를 시 입력 창 */
-		$("#testBtn").on('click', function() {
-			$("#modal").show();
-		});
-
-		$(".update")
-		.click(
-				function() {
-					var param = "num2=" + $(this).attr("title");
-					var url = "updateNoticeForm.do";
-					$
-							.ajax({
-								type : "post",
-								url : url,
-								data : param,
-								dataType : "json"
-							})
-							.done(
-									function(args) {
-                                        var notice_idx=args.notice_idx;
-										var subject = args.subject;
-										var content = args.content;
-
-										$("#subject2")
-												.append(
-														"<br class='a'><input type='text' name='subject' class='a' value='"+subject+"'>");
-										$("#content2")
-												.append(
-														"<br class='a'><textarea cols='50' rows='3' name='content' class='a' style='resize: none;'>"
-																		+ content
-																		+ "</textarea>");
-										$("#hidden")
-										.append(
-												"<input type='hidden' name='notice_idx' value='"+notice_idx+"' />");
-									});
-					$("#updatemodal").show();
-					return false;
-				});
-
-	});
-	function deletelist(a){
-	      if(confirm("삭제하시겠습니까?")){
-	            location.href="deleteNotice.do?notice_idx="+a;
-
-	          }else{
-	            close();
-	              }
-			}
-
-	function closeModal() {
-		$('.searchModal').hide();
-		$('#updatemodal').hide();
-		$('.a').remove();
-	};
-
-
 	//logout시 controller session 삭제 처리로 이동  
 	function logout(){
 				if(confirm("로그아웃 하시겠습니까?")){
