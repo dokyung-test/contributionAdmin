@@ -71,6 +71,12 @@ public class adminController {
 		mav.setViewName("Notice");
 		return mav;
 	}
+	
+	//공지사항 추가페이지로 이동
+	@RequestMapping(value = "/NoticeInsert.do", method = RequestMethod.GET)
+	public String NoticeInsertForm() {
+		return "NoticeInsert";
+	}
 
 	// 공지사항 추가
 	@RequestMapping(value = "insertNotice.do", method = RequestMethod.POST)

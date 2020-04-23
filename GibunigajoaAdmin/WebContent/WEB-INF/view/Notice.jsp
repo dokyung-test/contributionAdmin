@@ -60,9 +60,9 @@
           ]      
  	   });
 		
-		/* 공지사항 작성 누를 시 입력 창 */
+		/* 공지사항 작성 누를 시 입력 폼으로 이동 */
 		$("#testBtn").on('click', function() {
-			$("#modal").show();
+			location.href="NoticeInsert.do";
 		});
 s
 	});
@@ -247,90 +247,10 @@ s
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- 공지사항 리스트 끝 -->
-
-			<!-- 공지사항 작성 폼 -->
-			<div id="modal" class="searchModal">
-				<div class="container" style="width: 900px;">
-					<div class="row justify-content-center">
-						<div class="col-md-12">
-							<div class="wrapper">
-								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4" style="font-size: 40px">공지사항 작성</h3>
-									<form method="POST" action="insertNotice.do" name="form"
-										onsubmit="return checkAll()">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 25px">제목</label> 
-													<input type="text" class="form-control" name="subject" placeholder="제목">
-												</div>
-											</div>
-											
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 25px">공지 내용</label>
-													<textarea name="content" id="summernote" class="form-control" cols="50"
-														rows="10" placeholder="공지할 내용을 작성해 주세요."></textarea>
-												</div>
-											</div>
-											
-											<div class="col-md-12">
-												<div class="form-group">
-													<input type="button" onclick="closeModal()" style="float: right; height: 50px; 
-													       width: 150px; font-size: 20px;" value="취소" class="btn btn-primary" /> 
-													<input type="submit" style="float: right; margin-right: 1%; height: 50px; 
-													       width: 150px; font-size: 20px;" value="작성" class="btn btn-primary" />
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 공지 사항 추가 종료 -->
-
-			<!-- 공지사항 상세글 시작 -->
-			<div id="cotentmodal" class="searchModal">
-				<div class="container" style="width: 900px;">
-					<div class="row justify-content-center">
-						<div class="col-md-12">
-							<div class="wrapper">
-								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4" style="font-size: 40px" align="center">공지사항</h3>
-
-									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="label" style="font-size: 25px" id="subject3">제목</label> <!-- 상단의 <script>의 내용을 통해 <label>뒤에 append로 붙여짐 -->
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="label" style="font-size: 25px" id="content3">공지사항 내용</label> <!-- 상단의 <script>의 내용을 통해 <label>뒤에 append로 붙여짐 -->
-											</div>
-										</div>
-										
-										<div class="col-md-12">
-											<div class="form-group">
-												<input type="button" onclick="closeModal()" id="cancel" style="float: right; height: 50px; 
-												       width: 150px; font-size: 20px;" value="취소" class="btn btn-primary" />
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 공지사항 상세 끝 -->
+			</div>			
 		</div>
 	</div>
+<!-- 공지사항 리스트 끝 -->
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
