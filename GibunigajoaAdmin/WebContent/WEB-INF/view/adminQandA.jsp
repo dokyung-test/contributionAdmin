@@ -130,7 +130,7 @@
 									<thead>
 										<tr>
 											<th style="width: 100px;">답변상태</th>
-											<th style="width: 100px;">문의자</th>
+											<th style="width: 200px;">문의자</th>
 											<th>제목</th>
 											<th style="width: 150px;">문의날짜</th>
 										</tr>
