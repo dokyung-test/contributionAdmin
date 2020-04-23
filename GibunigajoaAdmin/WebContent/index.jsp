@@ -7,9 +7,9 @@
 </head>
 <body>
  
-<!--  <a href="loginForm.do">어드민</a> -->
+<a href="note.do">1</a>
  
-<c:redirect url="loginForm.do"></c:redirect>
+<%-- <c:redirect url="loginForm.do"></c:redirect> --%>
 
 </body>
 </html>

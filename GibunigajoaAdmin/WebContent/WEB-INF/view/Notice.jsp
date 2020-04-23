@@ -30,59 +30,41 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
+<script src="${pageContext.request.contextPath}/resources/js/summernote/summernote-lite.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js" defer></script>
+
 <script>
 	$(function() {
+
+		$('#summernote').summernote({
+   		 placeholder: '공지사항을 적어주세요.',
+   	        height: 500,
+   	        width: 650,
+   	        lang: 'ko-KR',    
+   	     toolbar: [
+             // [groupName, [list of button]]
+             ['Font Style', ['fontname']],
+             ['style', ['bold', 'italic', 'underline']],
+             ['font', ['strikethrough']],
+             ['fontsize', ['fontsize']],
+             ['color', ['color']],
+             ['para', ['paragraph']],
+             ['height', ['height']],
+             ['Insert', ['picture']],
+             ['Insert', ['link']],
+             ['Misc', ['fullscreen']]
+          ]      
+ 	   });
+		
 		/* 공지사항 작성 누를 시 입력 창 */
 		$("#testBtn").on('click', function() {
 			$("#modal").show();
 		});
-
-        /* 수정 클릭시 */
-		$(".update").click(
-				function() {
-					var param = "num2=" + $(this).attr("title");
-					var url = "updateNoticeForm.do";
-					$.ajax({
-								type : "post",
-								url : url,
-								data : param,
-								dataType : "json"
-							}).done(function(args) {
-                                        var notice_idx=args.notice_idx;
-										var subject = args.subject;
-										var content = args.content;
-
-										$("#subject2").append("<p class='a'><input type='text' name='subject' style='width:650px;' class='form-control' value='"+subject+"'></p>");
-										$("#content2").append("<p class='a'><textarea rows='10' name='content' class='form-control' style='width:650px; resize: none;'  align='center'>"  + content + "</textarea></p>");
-										$("#hidden").append("<input type='hidden' name='notice_idx' value='"+notice_idx+"' />");
-									});
-					$("#updatemodal").show();
-					return false;
-				});
-
-		/* 상세글 보기 */
-		$(".content").click(
-				function() {
-					var param = "num2=" + $(this).attr("title");
-					var url = "updateNoticeForm.do";
-					$.ajax({
-								type : "post",
-								url : url,
-								data : param,
-								dataType : "json"
-							})
-							.done(function(args) {
-                                        var notice_idx=args.notice_idx;
-										var subject = args.subject;
-										var content = args.content;
-
-										$("#subject3").append("<p class='a'><input type='text' class='form-control'style='width:650px;' value='"+subject+"'></p>");
-										$("#content3").append("<p class='a'><textarea readonly='readonly' rows='10's class='form-control' style='width:650px; resize: none;'align='reft'>"+ content+ "</textarea></p>");
-									});
-					$("#cotentmodal").show();
-					return false;
-				});
-
+s
 	});
 
 	//공지사항 삭제 클릭시
@@ -249,13 +231,13 @@
 												<td style="font-size: 15px"><p id="register_date">
 														<fmt:formatDate value="${dto.register_date}" pattern="yyyy년 MM월 dd일" /></td>
 												
-												<td style="font-size: 15px"><a href="#" class="content"
-													title="${dto.notice_idx}">${dto.subject}</a></td>
+												<td style="font-size: 15px"><a href="Noticecontent.do?notice_idx=${dto.notice_idx}" class="content"
+													>${dto.subject}</a></td>
 												
 												<td style="font-size: 15px"><p id="readcount">${dto.readcount}</td>
 												
 												<td align="center" style="font-size: 15px">
-												<a href="#" title="${dto.notice_idx}" class="update" style="color: blue">수정 /</a> 
+												<a href="updateNoticeForm.do?notice_idx=${dto.notice_idx}" class="update" style="color: blue">수정 /</a> 
 												<a href="#" onclick="deletelist(${dto.notice_idx})" style="color: blue">삭제</a></td>
 											</tr>
 										</c:forEach>
@@ -312,47 +294,6 @@
 			</div>
 			<!-- 공지 사항 추가 종료 -->
 
-			<!-- 공지사항 수정 시작 -->
-			<div id="updatemodal" class="searchModal">
-				<div class="container" style="width: 900px;">
-					<div class="row justify-content-center">
-						<div class="col-md-12">
-							<div class="wrapper">
-								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4" style="font-size: 40px" align="center">공지사항
-										수정</h3>
-									<form method="POST" action="update.do" name="form"
-										onsubmit="return checkAll2()">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label" style="font-size: 25px" id="subject2">제목</label> <!-- 상단의 <script>의 내용을 통해 <label>뒤에 append로 붙여짐 -->
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="label"
-														style="font-size: 25px; margin-left: 5px;" id="content2">공지사항 내용</label> <!-- 상단의 <script>의 내용을 통해 <label>뒤에 append로 붙여짐 -->
-												</div>
-											</div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<input type="button" onclick="closeModal()" id="cancel" style="float: right; 
-													       height: 50px; width: 150px; font-size: 20px;" value="취소" class="btn btn-primary" />
-													<input type="submit" id="hidden" style="float: right; margin-right: 1%; height: 50px; 
-													       width: 150px; font-size: 20px;" value="수정" class="btn btn-primary" />
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 공지사항 수정 끝 -->
-
 			<!-- 공지사항 상세글 시작 -->
 			<div id="cotentmodal" class="searchModal">
 				<div class="container" style="width: 900px;">
@@ -387,7 +328,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- 공지사항 수정 끝 -->
+			<!-- 공지사항 상세 끝 -->
 		</div>
 	</div>
 

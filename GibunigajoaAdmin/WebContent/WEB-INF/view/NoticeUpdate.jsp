@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page isELIgnored="false"%>
 
-<!-- -------------------------------------관리자 Q&A 답변 페이지------------------------------------------------- -->
+<!-- -------------------------------------관리자 공지사항 수정 페이지------------------------------------------------- -->
 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -42,30 +42,32 @@
 
     $(document).ready(function() {
     	$('#summernote').summernote({
+    		codeviewFilter: false,
+    		  codeviewIframeFilter: true,
     		 placeholder: '답변 내용을 적어주세요.',
     	        height: 500,
-    	        width: 920,
+    	        width: 800,
     	        lang: 'ko-KR',
     	        toolbar: [
-                    // [groupName, [list of button]]
-                    ['Font Style', ['fontname']],
-                    ['style', ['bold', 'italic', 'underline']],
-                    ['font', ['strikethrough']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['paragraph']],
-                    ['height', ['height']],
-                    ['Insert', ['picture']],
-                    ['Insert', ['link']],
-                    ['Misc', ['fullscreen']]
-                 ]
-           
+    	                    // [groupName, [list of button]]
+    	                    ['Font Style', ['fontname']],
+    	                    ['style', ['bold', 'italic', 'underline']],
+    	                    ['font', ['strikethrough']],
+    	                    ['fontsize', ['fontsize']],
+    	                    ['color', ['color']],
+    	                    ['para', ['paragraph']],
+    	                    ['height', ['height']],
+    	                    ['Insert', ['picture']],
+    	                    ['Insert', ['link']],
+    	                    ['Misc', ['fullscreen']]
+    	                 ]
+            
   	});
 	});
 
     /* 목록 버튼 누르면 리스트로 돌아감 */
-	function returnQandA() {
-		location.href = "adminQandA.do";
+	function returnNotice() {
+		location.href = "adminNoticeList.do";
 	}
 
 	//logout시 controller session 삭제 처리로 이동  
@@ -163,57 +165,35 @@
 				<!-- 관리자 로그아웃 버튼 끝 -->
 
                 <!-- 관리자 Q&A 답변창 시작 -->
-				<div class="container">
-					<div class="col-md-12">
-						<h1 class="mb-4">Q&A답변하기</h1>
-						<button onclick="returnQandA()" class="btn btn-primary"
-							    style="position: relative; left: 800px; width: 250px; font-size: 20px;">목록</button>
-						<form action="qANDaUpdate.do" method="post">
+				<div class="container" >
+					<div class="col-md-12" style="width:1000px;">
+						<h1 class="mb-4">공지사항 수정</h1>
+						<button onclick="returnNotice()" class="btn btn-primary"
+							    style="position: relative; left: 700px; width: 250px; font-size: 20px;">목록</button>
+						<form action="update.do" method="post">
 							<div class="row no-gutters mb-5" style="background: #e8edf0;">
 								<div class="contact-wrap w-100 p-md-5 p-4">
 									<div id="form-message-warning" class="mb-4"></div>
 									<div class="row">
-										<div class="col-md-12" style="display: inline;">
-											<h2>${list.subject}</h2>
-										</div>
-										<hr width="1000px" color="black" noshade />
-										<ul style="width: 100%; position: relative; top: 10px;">
-											<li style="display: inline; color: black; position: relative; right: 30px;">
-											                      작성자 :${list.nickname}</li>
-											                      
-											<li style="display: inline; color: black; position: relative; left: 20px;">
-												<div style="display: inline;">접수 상태</div> 
-												<select name="status_id">
-													<option value="1">접수중</option>
-													<option value="2">처리중</option>
-													<option value="3">답변완료</option>
-											    </select>
-											</li>
+									<div class="form-group">
+										<label class="label" style="font-size: 25px; color:black">공지사항 제목</label> 
+																	
+										<p><input type='text' style='width:800px; height:50px;'  name='subject' class='a' value="${list.subject}"></p>		
+										<hr width="800px" color="black" noshade />
+										
 											
-											<li style="display: inline; color: black; position: relative; left: 350px;">
-											                      작성일 : <fmt:formatDate value="${list.register_date}" pattern="yyyy년 MM월 dd일" />
-											</li>
-										</ul>
+									<label class="label" style="font-size: 25px; color:black">공지사항 내용</label> 
 										
-										<hr width="1000px" color="black" noshade />
-										
-										<div style="font-size: 22px; color:black">문의내용</div>
-										<textarea class="form-control" name=subject id="subject"
-											      style="margin: auto; display: inline-block;" rows="20"
-											      readonly="readonly">${list.content}</textarea>
-											
-									<div style="font-size: 22px; color:black">답변내용</div>
-										
-										<textarea class="form-control" name=answer id="summernote"
-											      style="margin: auto; display: inline-block;" rows="20">${list.answer}</textarea>
+										<textarea class="form-control" name=content id="summernote"
+											      style="margin: auto; display: inline-block;" rows="20">${list.content}</textarea>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
 											<input type="submit" id="hidden" style="float: right; margin-right: 1%; height: 50px; 
-											       width: 150px; font-size: 20px;" value="답변하기" class="btn btn-primary" />
+											       width: 150px; font-size: 20px;" value="수정하기" class="btn btn-primary" />
 										</div>
 									</div>
-									<input type="hidden" name="board_idx" value="${list.board_idx}" />
+									<input type="hidden" name="notice_idx" value="${list.notice_idx}" />
 								</div>
 							</div>
 						</form>
