@@ -43,7 +43,7 @@
     $(document).ready(function() {
     	$('#summernote').summernote({
     		 placeholder: '답변 내용을 적어주세요.',
-    	        height: 500,
+    	        height: 400,
     	        width: 920,
     	        lang: 'ko-KR',
     	        toolbar: [
@@ -183,7 +183,7 @@
 											                      
 											<li style="display: inline; color: black; position: relative; left: 20px;">
 												<div style="display: inline;">접수 상태</div> 
-												<select name="status_id">
+												<select name="status_id" style="height:40px;">
 													<option value="1">접수중</option>
 													<option value="2">처리중</option>
 													<option value="3">답변완료</option>
@@ -199,13 +199,13 @@
 										
 										<div style="font-size: 22px; color:black">문의내용</div>
 										<textarea class="form-control" name=subject id="subject"
-											      style="margin: auto; display: inline-block;" rows="20"
+											      style="margin: auto; display: inline-block;" rows="10"
 											      readonly="readonly">${list.content}</textarea>
 											
 									<div style="font-size: 22px; color:black">답변내용</div>
 										
 										<textarea class="form-control" name=answer id="summernote"
-											      style="margin: auto; display: inline-block;" rows="20">${list.answer}</textarea>
+											      style="margin: auto; display: inline-block;" rows="15">${list.answer}</textarea>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
