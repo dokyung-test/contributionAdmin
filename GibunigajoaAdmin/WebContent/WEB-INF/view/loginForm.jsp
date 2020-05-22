@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="<c:url value="/resources/css/animate.css"/>">
     <link href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="/resources/css/owl.theme.default.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/owl.theme.deflocalhost:3306ault.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/magnific-popup.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/ionicons.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/flaticon.css"/>">
@@ -27,7 +27,7 @@
 
 </head>
 <body>
-<form action="loginCheck.do">
+<form action="loginCheck.do" method = "post">
 	<section class="ftco-section">
     	<div class="container">
     		<div class="row justify-content-center">

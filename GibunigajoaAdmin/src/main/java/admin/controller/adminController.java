@@ -172,7 +172,7 @@ public class adminController {
 	}
 
 	// 로그인 체크
-	@RequestMapping(value = "/loginCheck.do", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@RequestMapping(value = "/loginCheck.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public void loginCheck(String user_id, String password, HttpSession session, HttpServletResponse response)
 			throws Exception {

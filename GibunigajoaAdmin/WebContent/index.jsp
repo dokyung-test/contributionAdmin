@@ -8,7 +8,6 @@
 <body>
  
 
- 
 <c:redirect url="loginForm.do"></c:redirect>
 
 </body>
